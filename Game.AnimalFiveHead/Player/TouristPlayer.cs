@@ -1,10 +1,10 @@
 using Common.PlayingCards.Enums;
 
-namespace Game.AnimalFive.Player
+namespace Game.AnimalFiveHead.Player
 {
   public class TouristPlayer : NormalPlayer
   {
-    public TouristPlayer() : base(AnimalFiveHeadConstants.TouristId, CardFace.Rabbit)
+    public TouristPlayer() : base(AnimalFiveHeadConstants.TouristId, PlayCardFace.Rabbit)
     {
 
     }

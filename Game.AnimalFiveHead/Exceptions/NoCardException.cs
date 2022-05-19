@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.AnimalFive.Exceptions
+namespace Game.AnimalFiveHead.Exceptions
 {
 #pragma warning disable S3925
   public class NoCardException : Exception

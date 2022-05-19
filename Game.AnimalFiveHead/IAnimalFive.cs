@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Common.PlayingCards.CardDecks;
-using Game.AnimalFive.Player;
+using Game.AnimalFiveHead.Player;
 
-namespace Game.AnimalFive
+namespace Game.AnimalFiveHead
 {
   public interface IAnimalFive
   {

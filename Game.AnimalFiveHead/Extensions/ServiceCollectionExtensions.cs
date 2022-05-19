@@ -1,7 +1,7 @@
 using Common.PlayingCards.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Game.AnimalFive.Extensions
+namespace Game.AnimalFiveHead.Extensions
 {
   public static class ServiceCollectionExtensions
   {

@@ -3,10 +3,10 @@ using System.Linq;
 using Common.PlayingCards.CardDecks;
 using Common.PlayingCards.Exceptions;
 using Common.PlayingCards.Models;
-using Game.AnimalFive.Enums;
-using Game.AnimalFive.Player;
+using Game.AnimalFiveHead.Enums;
+using Game.AnimalFiveHead.Player;
 
-namespace Game.AnimalFive
+namespace Game.AnimalFiveHead
 {
   public class AnimalFiveHead : IAnimalFive
   {
@@ -72,22 +72,22 @@ namespace Game.AnimalFive
 
       if (playerScore > keeperScore && playerScore > touristScore)
       {
-        player.GameStatus = GameStatus.PlayerWin;
+        player.GameStatus = PlayerGameResult.PlayerWin;
       }
       else if (playerScore > keeperScore && playerScore < touristScore)
       {
-        player.GameStatus = GameStatus.TouristWin;
+        player.GameStatus = PlayerGameResult.TouristWin;
       }
       else if (playerScore < keeperScore && playerScore > touristScore)
       {
-        player.GameStatus = GameStatus.KeeperWin;
+        player.GameStatus = PlayerGameResult.KeeperWin;
       }
       else
       {
-        player.GameStatus = GameStatus.Draw;
+        player.GameStatus = PlayerGameResult.Draw;
       }
     }
 
-    private Card GetCard() => CardDeck.GetCard() ?? throw new NoCardException();
+    private PlayCard GetCard() => CardDeck.GetCard() ?? throw new NoCardException();
   }
 }

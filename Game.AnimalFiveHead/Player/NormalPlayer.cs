@@ -2,27 +2,27 @@ using System;
 using System.Collections.Generic;
 using Common.PlayingCards.Enums;
 using Common.PlayingCards.Models;
-using Game.AnimalFive.Enums;
+using Game.AnimalFiveHead.Enums;
 
-namespace Game.AnimalFive.Player
+namespace Game.AnimalFiveHead.Player
 {
   public class NormalPlayer : IPlayer
   {
-    private readonly CardFace _protectedCardType;
+    private readonly PlayCardFace _protectedCardType;
 
     public int PlayerId { get; }
-    public List<Card> Cards { get; init; }
+    public List<PlayCard> Cards { get; init; }
     public int Score => CalculateScore();
-    public GameStatus GameStatus { get; set; }
+    public PlayerGameResult GameStatus { get; set; }
 
-    public NormalPlayer(int playerId, CardFace cardTypeToSave = CardFace.None)
+    public NormalPlayer(int playerId, PlayCardFace cardTypeToSave = PlayCardFace.None)
     {
-      Cards = new List<Card>();
+      Cards = new List<PlayCard>();
       PlayerId = playerId;
       _protectedCardType = cardTypeToSave;
     }
 
-    public void AddCard(Card card)
+    public void AddCard(PlayCard card)
     {
       if (card != null)
       {

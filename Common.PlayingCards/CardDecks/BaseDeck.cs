@@ -10,15 +10,15 @@ namespace Common.PlayingCards.CardDecks
     private readonly IRandomNumberGenerator _randomNumberGenerator;
     private const int NumberTimesToShuffle = 5;
 
-    public List<Card> Cards { get; }
+    public List<PlayCard> Cards { get; }
 
     protected BaseDeck(IRandomNumberGenerator randomNumberGenerator)
     {
       _randomNumberGenerator = randomNumberGenerator;
-      Cards = new List<Card>();
+      Cards = new List<PlayCard>();
     }
 
-    public void AddCard(Card card)
+    public void AddCard(PlayCard card)
     {
       if (card != null)
       {
@@ -26,7 +26,7 @@ namespace Common.PlayingCards.CardDecks
       }
     }
 
-    public Card? GetCard()
+    public PlayCard? GetCard()
     {
       var numCards = Cards.Count;
 
@@ -41,7 +41,7 @@ namespace Common.PlayingCards.CardDecks
       return card;
     }
 
-    public Card? GetCard(int id)
+    public PlayCard? GetCard(int id)
     {
       var numCards = Cards.Count;
 

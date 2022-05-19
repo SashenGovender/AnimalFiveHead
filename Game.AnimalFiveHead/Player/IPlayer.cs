@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using Common.PlayingCards.Models;
-using Game.AnimalFive.Enums;
+using Game.AnimalFiveHead.Enums;
 
-namespace Game.AnimalFive.Player
+namespace Game.AnimalFiveHead.Player
 {
   public interface IPlayer
   {
-    public void AddCard(Card card);
+    public void AddCard(PlayCard card);
     public int Score { get; }
     public int PlayerId { get; }
-    public List<Card> Cards { get; }
-    public GameStatus GameStatus { get; set; }
+    public List<PlayCard> Cards { get; }
+    public PlayerGameResult GameStatus { get; set; }
   }
 }

@@ -8,13 +8,12 @@ namespace Common.PlayingCards.CardDecks
   {
     public StandardDeck(IRandomNumberGenerator randomNumberGenerator) : base(randomNumberGenerator)
     {
-      for (var cardFace = (int)CardFace.Ace; cardFace <= (int)CardFace.King; cardFace++)
+      for (var cardFace = (int)PlayCardFace.Ace; cardFace <= (int)PlayCardFace.King; cardFace++)
       {
-        var value = cardFace > 10 ? 10 : cardFace;
-        AddCard(new Card((CardFace)cardFace, CardSuit.Clubs, value));
-        AddCard(new Card((CardFace)cardFace, CardSuit.Diamonds, value));
-        AddCard(new Card((CardFace)cardFace, CardSuit.Hearts, value));
-        AddCard(new Card((CardFace)cardFace, CardSuit.Spades, value));
+        AddCard(new PlayCard((PlayCardFace)cardFace, PlayCardType.Clubs, cardFace));
+        AddCard(new PlayCard((PlayCardFace)cardFace, PlayCardType.Diamonds, cardFace));
+        AddCard(new PlayCard((PlayCardFace)cardFace, PlayCardType.Hearts, cardFace));
+        AddCard(new PlayCard((PlayCardFace)cardFace, PlayCardType.Spades, cardFace));
       }
 
       Shuffle();

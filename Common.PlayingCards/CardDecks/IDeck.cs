@@ -5,10 +5,10 @@ namespace Common.PlayingCards.CardDecks
 {
   public interface IDeck
   {
-    public void AddCard(Card card);
-    public Card? GetCard();
-    public Card? GetCard(int id);
-    public List<Card> Cards { get; }
+    public void AddCard(PlayCard card);
+    public PlayCard? GetCard();
+    public PlayCard? GetCard(int id);
+    public List<PlayCard> Cards { get; }
     public void Shuffle();
   }
 }

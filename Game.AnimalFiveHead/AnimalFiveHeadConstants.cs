@@ -1,4 +1,4 @@
-namespace Game.AnimalFive
+namespace Game.AnimalFiveHead
 {
   public static class AnimalFiveHeadConstants
   {
