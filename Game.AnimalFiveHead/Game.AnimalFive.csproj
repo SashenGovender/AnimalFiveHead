@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>Game.AnimalFive</AssemblyName>
+    <RootNamespace>Game.AnimalFive</RootNamespace>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>true</WarningsAsErrors>
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Card.cs" />
+    <Compile Remove="Deck.cs" />
+    <Compile Remove="Enums.cs" />
+    <Compile Remove="StandardDeck.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common.PlayingCards\Common.PlayingCards.csproj" />
+  </ItemGroup>
+
+</Project>
