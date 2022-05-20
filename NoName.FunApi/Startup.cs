@@ -10,6 +10,7 @@ namespace NoName.FunApi
 {
   public class Startup
   {
+    private const string CORSPolicyName = "NoNameFunApi";
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
@@ -27,6 +28,22 @@ namespace NoName.FunApi
 
       services.AddDapperDatabaseAccess();
       services.AddAnimalFiveGame();
+
+      //https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0
+#pragma warning disable IDE0053 // Use expression body for lambda expressions
+      services.AddCors(options =>
+      {
+        options.AddPolicy(CORSPolicyName, builder =>
+        {
+          builder.AllowAnyMethod();
+          builder.AllowAnyHeader();
+          builder.AllowCredentials();
+          builder.WithOrigins("http://https://localhost:7001/html/welcome");
+
+        });
+      });
+#pragma warning restore IDE0053 // Use expression body for lambda expressions
+
       //services.Configure<DatabaseConnectionInformation>(Configuration.GetSection("AnimalFiveDatabaseConnectionInformation"))
 
       //services
@@ -34,16 +51,6 @@ namespace NoName.FunApi
       //    .AddJsonOptions(options =>
       //        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
       //    );
-
-      //services.AddCors(options =>
-      //{
-      //    options.AddPolicy("sashen",
-      //    builder =>
-      //    {
-      //        builder.WithOrigins("file:///D:/Downloads/Programming%20Learning/Projects/IntroductionToCoreWebAPI/game.html");
-
-      //    });
-      //});
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +69,7 @@ namespace NoName.FunApi
         app.UseHsts();
       }
 
-      //app.UseCors("sashen");
+      app.UseCors(CORSPolicyName);
 
       app.UseHttpsRedirection();
       app.UseFileServer();
@@ -71,12 +78,14 @@ namespace NoName.FunApi
 
       app.UseAuthorization();
 
+#pragma warning disable IDE0053 // Use expression body for lambda expressions
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "api/{controller=Values}/{action=Index}/{id?}");
       });
+#pragma warning restore IDE0053 // Use expression body for lambda expressions
     }
   }
 }
