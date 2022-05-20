@@ -12,4 +12,4 @@ Post-Deployment Script Template
 
 :r ..\dbo\Tables\Presets\dbo.tb_PlayerSessionInformation.Presets.sql
 
-:r .\Security\NoNameUser.sql
+:r ..\Security\NoNameUser.sql
