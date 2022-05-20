@@ -18,7 +18,7 @@ namespace NoName.FunApi.DataAccess
 
     private const string DatabaseName = "AnimalFiveHead";
     private const string UpsertPlayerSessionProc = "dbo.pr_UpsertPlayerSession";
-    private const string GetPlayerSessionProc = "dbo.pr_GetPlayerSessions";
+    private const string GetGameSessionProc = "dbo.pr_GetGameSession";
     private const string CompleteGameSessionProc = "dbo.pr_CompleteGameSession";
 
     public AnimalFiveDatabaseAccess(IDatabaseAccess dataAccess, ILogger<AnimalFiveDatabaseAccess> logger)
@@ -33,7 +33,8 @@ namespace NoName.FunApi.DataAccess
       parameters.Add("SessionId", newPlayerData.SessionId);
       parameters.Add("PlayerId", newPlayerData.PlayerId);
       parameters.Add("Score", newPlayerData.Score);
-      parameters.Add("PlayerCards", newPlayerData.Cards);
+      parameters.Add("Cards", newPlayerData.Cards);
+      parameters.Add("CardIds", newPlayerData.CardIds);
 
       try
       {
@@ -53,7 +54,7 @@ namespace NoName.FunApi.DataAccess
 
       try
       {
-        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerSessionData>(DatabaseName, GetPlayerSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
+        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerSessionData>(DatabaseName, GetGameSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
         return data;
       }
       catch (Exception ex)
