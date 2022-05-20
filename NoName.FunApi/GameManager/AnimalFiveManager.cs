@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.PlayingCards;
 using Common.PlayingCards.Enums;
 using Game.AnimalFiveHead;
-using Game.AnimalFiveHead.Player;
 using NoName.FunApi.Models.AnimalFive;
 
 namespace NoName.FunApi.GameManager
@@ -29,14 +27,11 @@ namespace NoName.FunApi.GameManager
     {
       _gameSessionManager.CreateSetSessionId();
 
-      for (var players = 1; players <= request.NumberOfPlayers; players++)
-      {
-        _animalFiveGame.Players.Add(new NormalPlayer(players));
-      }
+      _animalFiveGame.AddRealPlayers(request.NumberOfPlayers);
 
-      _animalFiveGame.BeginPlay();
+      _animalFiveGame.BeginGame();
 
-      await _gameSessionManager.SaveGameStateAsync(_animalFiveGame, token);
+      await _gameSessionManager.SaveGameStateAsync(token);
 
       var playResponse = new AnimalFivePlayResponse(_animalFiveGame.Keeper, _animalFiveGame.Tourist, _animalFiveGame.Players, _gameSessionManager.GameSessionId);
       return playResponse;
@@ -49,13 +44,13 @@ namespace NoName.FunApi.GameManager
     {
       _gameSessionManager.CreateSetSessionId(Guid.Parse(request.SessionId!));
 
-      await _gameSessionManager.RestoreGameStateAsync(_animalFiveGame, token);
+      await _gameSessionManager.RestoreGameStateAsync(token);
 
-      var chainPlayActionResult = _animalFiveGame.Chain(request.PlayerId);
+      var player = _animalFiveGame.Chain(request.PlayerId);
 
-      await _gameSessionManager.UpdateGameStateAsync(chainPlayActionResult, token);
+      await _gameSessionManager.UpdateGameStateAsync(player, token);
 
-      var chainResponse = new AnimalFiveChainResponse(request, chainPlayActionResult);
+      var chainResponse = new AnimalFiveChainResponse(request, player);
       return chainResponse;
     }
 
@@ -63,14 +58,15 @@ namespace NoName.FunApi.GameManager
     {
       _gameSessionManager.CreateSetSessionId(Guid.Parse(request.SessionId!));
 
-      await _gameSessionManager.RestoreGameStateAsync(_animalFiveGame, token);
+      await _gameSessionManager.RestoreGameStateAsync(token);
 
-      foreach (var player in _animalFiveGame.Players)
-      {
-        _animalFiveGame.CompletePlayerGame(player);
-      }
+      _animalFiveGame.PlayNpcRound();
 
-      var gameResults = new AnimalFiveCompleteGameResponse(request.SessionId, _animalFiveGame.Keeper, _animalFiveGame.Tourist, _animalFiveGame.Players);
+      _animalFiveGame.EndGame();
+
+      await _gameSessionManager.CompleteGameSessionAsync(token);
+
+      var gameResults = new AnimalFiveCompleteGameResponse(request.SessionId, _animalFiveGame);
       return gameResults;
     }
 
@@ -78,7 +74,9 @@ namespace NoName.FunApi.GameManager
     {
       var deck = _deckFactory.CreateDeck(DeckType.AnimalFiveHead);
 
-      _animalFiveGame.Initialise(deck, new List<NormalPlayer>(), new KeeperPlayer(), new TouristPlayer());
+      _animalFiveGame.InitialiseDeck(deck);
+
+      _gameSessionManager.SetGame(_animalFiveGame);
     }
 
   }

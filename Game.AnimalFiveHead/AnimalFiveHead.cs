@@ -10,24 +10,33 @@ namespace Game.AnimalFiveHead
 {
   public class AnimalFiveHead : IAnimalFive
   {
-    public TouristPlayer Tourist { get; private set; } = null!;
-    public KeeperPlayer Keeper { get; private set; } = null!;
-    public IDeck CardDeck { get; private set; } = null!;
-    public List<NormalPlayer> Players { get; private set; } = null!;
+    private readonly IPlayerFactory _playerFactory;
 
-    public AnimalFiveHead()
+    public BasePlayer Tourist { get; init; }
+    public BasePlayer Keeper { get; init; }
+    public List<BasePlayer> Players { get; init; }
+    public IDeck? CardDeck { get; private set; }
+
+    public AnimalFiveHead(IPlayerFactory playerFactory)
     {
+      _playerFactory = playerFactory;
+
+      Players = new List<BasePlayer>();
+      Keeper = _playerFactory.GetPlayer(AnimalFiveHeadConstants.KeeperId);
+      Tourist = _playerFactory.GetPlayer(AnimalFiveHeadConstants.TouristId);
     }
 
-    public void Initialise(IDeck cardDeck, List<NormalPlayer> players, KeeperPlayer keeper, TouristPlayer tourist)
+    public void InitialiseDeck(IDeck cardDeck) => CardDeck = cardDeck;
+
+    public void AddRealPlayers(int numberOfPlayers)
     {
-      CardDeck = cardDeck;
-      Players = players;
-      Keeper = keeper;
-      Tourist = tourist;
+      for (var playerId = 0; playerId < numberOfPlayers; playerId++)
+      {
+        Players.Add(_playerFactory.GetPlayer(playerId));
+      }
     }
 
-    public void BeginPlay()
+    public void BeginGame()
     {
       foreach (var player in Players)
       {
@@ -38,56 +47,47 @@ namespace Game.AnimalFiveHead
       Tourist.AddCard(GetCard());
     }
 
-    public IPlayer Chain(int playerId)
+    public BasePlayer Chain(int playerId)
     {
-      if (playerId is AnimalFiveHeadConstants.KeeperId)
-      {
-        while (Keeper.Cards.Count <= 4)
-        {
-          Keeper.Cards.Add(GetCard());
-        }
-        return Keeper;
-      }
-      else if (playerId is AnimalFiveHeadConstants.TouristId)
-      {
-        while (Tourist.Cards.Count <= 4)
-        {
-          Tourist.Cards.Add(GetCard());
-        }
-        return Tourist;
-      }
-      else
-      {
-        var player = Players.First(player => player.PlayerId == playerId);
-        player.AddCard(GetCard());
-        return player;
-      }
+      var player = Players.First(player => player.PlayerId == playerId);
+      player.Chain(GetCard);
+
+      return player;
     }
 
-    public void CompletePlayerGame(IPlayer player)
+    public void PlayNpcRound()
     {
-      var playerScore = player.Score;
+      Tourist.Chain(GetCard);
+      Keeper.Chain(GetCard);
+    }
+
+    public void EndGame()
+    {
       var keeperScore = Keeper.Score;
       var touristScore = Tourist.Score;
 
-      if (playerScore > keeperScore && playerScore > touristScore)
+      foreach (var player in Players)
       {
-        player.GameStatus = PlayerGameResult.PlayerWin;
-      }
-      else if (playerScore > keeperScore && playerScore < touristScore)
-      {
-        player.GameStatus = PlayerGameResult.TouristWin;
-      }
-      else if (playerScore < keeperScore && playerScore > touristScore)
-      {
-        player.GameStatus = PlayerGameResult.KeeperWin;
-      }
-      else
-      {
-        player.GameStatus = PlayerGameResult.Draw;
+        var playerScore = player.Score;
+        if (playerScore > keeperScore && playerScore > touristScore)
+        {
+          player.GameStatus = PlayerMatchResult.PlayerWin;
+        }
+        else if (playerScore > keeperScore && playerScore < touristScore)
+        {
+          player.GameStatus = PlayerMatchResult.TouristWin;
+        }
+        else if (playerScore < keeperScore && playerScore > touristScore)
+        {
+          player.GameStatus = PlayerMatchResult.KeeperWin;
+        }
+        else
+        {
+          player.GameStatus = PlayerMatchResult.Draw;
+        }
       }
     }
 
-    private PlayCard GetCard() => CardDeck.GetCard() ?? throw new NoCardException();
+    private PlayCard GetCard() => CardDeck!.GetCard() ?? throw new NoCardException();
   }
 }

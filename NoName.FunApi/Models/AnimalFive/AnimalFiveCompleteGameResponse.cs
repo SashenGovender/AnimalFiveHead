@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Game.AnimalFiveHead.Player;
+using Game.AnimalFiveHead;
 
 namespace NoName.FunApi.Models.AnimalFive
 {
@@ -18,24 +18,15 @@ namespace NoName.FunApi.Models.AnimalFive
     [JsonPropertyName("sessionId")]
     public string? SessionId { get; init; }
 
-    public AnimalFiveCompleteGameResponse(string? sessionId, KeeperPlayer keeper, TouristPlayer tourist, List<NormalPlayer> players)
+    public AnimalFiveCompleteGameResponse(string? sessionId, IAnimalFive animalFiveGame)
     {
       SessionId = sessionId;
 
-      Keeper = new NpcBag
-      {
-        Score = keeper.Score,
-        Cards = keeper.Cards,
-      };
-
-      Tourist = new NpcBag
-      {
-        Score = tourist.Score,
-        Cards = tourist.Cards,
-      };
+      Keeper = new NpcBag(animalFiveGame.Keeper.Cards, animalFiveGame.Keeper.Score);
+      Tourist = new NpcBag(animalFiveGame.Tourist.Cards, animalFiveGame.Tourist.Score);
 
       Players = new List<PlayerBag>();
-      foreach (var player in players)
+      foreach (var player in animalFiveGame.Players)
       {
         Players.Add(new PlayerBag
         {
@@ -45,7 +36,6 @@ namespace NoName.FunApi.Models.AnimalFive
           PlayerCards = player.Cards
         });
       }
-
     }
   }
 }

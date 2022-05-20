@@ -19,7 +19,7 @@ namespace NoName.FunApi.Models.AnimalFive
     [JsonPropertyName("sessionId")]
     public string? SessionId { get; init; }
 
-    public AnimalFiveChainResponse(AnimalFiveChainRequest request, IPlayer player)
+    public AnimalFiveChainResponse(AnimalFiveChainRequest request, BasePlayer player)
     {
       PlayerId = request.PlayerId;
       PlayerCards = player.Cards;

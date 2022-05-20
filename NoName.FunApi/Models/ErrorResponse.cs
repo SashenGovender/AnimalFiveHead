@@ -1,12 +1,14 @@
+using NoName.FunApi.Enums;
+
 namespace NoName.FunApi.Models
 {
   public class ErrorResponse
   {
-    public int ErrorCode { get; private set; }
-    public string Message { get; private set; }
-    public string SourceApplication { get; private set; }
+    public ErrorCodes ErrorCode { get; init; }
+    public string Message { get; init; }
+    public string SourceApplication { get; init; }
 
-    public ErrorResponse(int errorCode, string message)
+    public ErrorResponse(ErrorCodes errorCode, string message)
     {
       ErrorCode = errorCode;
       Message = message;

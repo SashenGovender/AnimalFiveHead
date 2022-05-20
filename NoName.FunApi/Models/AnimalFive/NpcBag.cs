@@ -11,5 +11,11 @@ namespace NoName.FunApi.Models.AnimalFive
 
     [JsonPropertyName("score")]
     public int Score { get; init; }
+
+    public NpcBag(List<PlayCard>? cards, int score)
+    {
+      Cards = cards;
+      Score = score;
+    }
   }
 }

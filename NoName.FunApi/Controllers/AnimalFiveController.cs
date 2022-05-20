@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NoName.FunApi.Enums;
 using NoName.FunApi.GameManager;
 using NoName.FunApi.Models;
 using NoName.FunApi.Models.AnimalFive;
@@ -29,7 +30,7 @@ namespace NoName.FunApi.Controllers
     {
       if (request.NumberOfPlayers <= 0)
       {
-        return BadRequest(new ErrorResponse(1, "Negative Number of Players"));
+        return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Negative Number of Players"));
       }
 
       var playResponse = await _animalFiveManager.BeginPlayAsync(request, token);
@@ -45,12 +46,12 @@ namespace NoName.FunApi.Controllers
     {
       if (request.PlayerId < 0)
       {
-        return BadRequest(new ErrorResponse(1, "Cannot have Negative number of players"));
+        return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Cannot have Negative number of players"));
       }
 
       if (!Guid.TryParse(request.SessionId, out _))
       {
-        return BadRequest(new ErrorResponse(2, "Invalid Game Session Guid"));
+        return BadRequest(new ErrorResponse(ErrorCodes.InvalidGameSession, "Invalid Game Session Guid"));
       }
 
       var chainResponse = await _animalFiveManager.ChainAsync(request, token);

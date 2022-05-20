@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.PlayingCards.Models;
 using Game.AnimalFiveHead;
 using Game.AnimalFiveHead.Player;
 using NoName.FunApi.DataAccess;
@@ -14,6 +13,7 @@ namespace NoName.FunApi.GameManager
   public class AnimalFiveGameSessionManager
   {
     private readonly IAnimalFiveDatabaseAccess _animalDatabaseAccess;
+    private IAnimalFive? _animalFiveHeadGame;
 
     public Guid GameSessionId { get; private set; }
 
@@ -22,81 +22,75 @@ namespace NoName.FunApi.GameManager
       _animalDatabaseAccess = animalDatabaseAccess;
     }
 
-    public void CreateSetSessionId(Guid? sessionId = null)
-    {
-#pragma warning disable IDE0022 // Use expression body for methods
-      GameSessionId = sessionId ?? Guid.NewGuid();
-#pragma warning restore IDE0022 // Use expression body for methods
-    }
+    public void CreateSetSessionId(Guid? sessionId = null) => GameSessionId = sessionId ?? Guid.NewGuid();
 
-    public async Task SaveGameStateAsync(IAnimalFive animalFiveHead, CancellationToken token)
-    {
-      var touristDto = CreatePlayerSessionObject(animalFiveHead.Tourist, GameSessionId);
-      var keeperDto = CreatePlayerSessionObject(animalFiveHead.Keeper, GameSessionId);
+    public void SetGame(IAnimalFive animalFiveGame) => _animalFiveHeadGame = animalFiveGame;
 
+    public async Task CompleteGameSessionAsync(CancellationToken token) => await _animalDatabaseAccess.CompleteGameSessionAsync(GameSessionId, token);
+
+    public async Task SaveGameStateAsync(CancellationToken token)
+    {
+      var touristDto = CreatePlayerSessionObject(_animalFiveHeadGame!.Tourist, GameSessionId);
       await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(touristDto, token);
+
+      var keeperDto = CreatePlayerSessionObject(_animalFiveHeadGame.Keeper, GameSessionId);
       await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(keeperDto, token);
 
-      foreach (var player in animalFiveHead.Players)
+      foreach (var player in _animalFiveHeadGame.Players)
       {
         var playerSessionDto = CreatePlayerSessionObject(player, GameSessionId);
         await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(playerSessionDto, token);
       }
     }
 
-    public async Task UpdateGameStateAsync(IPlayer newPlayerData, CancellationToken token)
+    public async Task UpdateGameStateAsync(BasePlayer newPlayerData, CancellationToken token)
     {
       var playerSessionDto = CreatePlayerSessionObject(newPlayerData, GameSessionId);
 
       await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(playerSessionDto, token);
     }
 
-    public async Task CompleteGameSessionAsync(CancellationToken token)
-    {
-#pragma warning disable IDE0022 // Use expression body for methods
-      await _animalDatabaseAccess.CompleteGameSessionAsync(GameSessionId, token);
-#pragma warning restore IDE0022 // Use expression body for methods
-    }
-
-    public async Task RestoreGameStateAsync(IAnimalFive animalFive, CancellationToken token)
+    public async Task RestoreGameStateAsync(CancellationToken token)
     {
       var gameData = await _animalDatabaseAccess.GetBySessionIdAsync(GameSessionId, token);
 
       foreach (var playerSessionData in gameData)
       {
-        NormalPlayer player = null!;
         if (playerSessionData.PlayerId == AnimalFiveHeadConstants.TouristId)
         {
-          player = animalFive.Tourist;
+          RestorePlayerCards(_animalFiveHeadGame!.Tourist, playerSessionData);
         }
         else if (playerSessionData.PlayerId == AnimalFiveHeadConstants.KeeperId)
         {
-          player = animalFive.Keeper;
+          RestorePlayerCards(_animalFiveHeadGame!.Keeper, playerSessionData);
         }
         else
         {
-          player = new NormalPlayer(playerSessionData.PlayerId);
-          animalFive.Players.Add(player);
-        }
-
-        var cardIds = playerSessionData.PlayerCardIds.Split(';');
-        foreach (var cardId in cardIds)
-        {
-          var cardIntId = int.Parse(cardId, new CultureInfo("en-US"));
-          player.AddCard(new PlayCard(cardIntId));
-
-          animalFive.CardDeck.GetCard(cardIntId);
+          var player = new NormalPlayer(playerSessionData.PlayerId);
+          _animalFiveHeadGame!.Players.Add(player);
+          RestorePlayerCards(player, playerSessionData);
         }
       }
     }
 
-    private static AnimalFivePlayerSessionData CreatePlayerSessionObject(IPlayer player, Guid sessionGuid)
+    private void RestorePlayerCards(BasePlayer player, AnimalFivePlayerSessionData playerSessionData)
+    {
+      var cardIds = playerSessionData.CardIds!.Split(';');
+      foreach (var cardId in cardIds)
+      {
+        var cardIntId = int.Parse(cardId, new CultureInfo("en-US"));
+        var card = _animalFiveHeadGame!.CardDeck!.GetCard(cardIntId);
+        player.AddCard(card!);
+      }
+    }
+
+    private static AnimalFivePlayerSessionData CreatePlayerSessionObject(BasePlayer player, Guid sessionGuid)
     {
 #pragma warning disable IDE0022 // Use expression body for methods
       return new AnimalFivePlayerSessionData()
       {
-        PlayerCards = string.Join(";", player.Cards),
-        PlayerCardIds = string.Join(";", player.Cards.Select(card => card.CardId)),
+        Cards = string.Join(";", player.Cards),
+        CardIds = string.Join(";", player.Cards.Select(card => card.CardId)),
         PlayerId = player.PlayerId,
         Score = player.Score,
         SessionId = sessionGuid.ToString(),

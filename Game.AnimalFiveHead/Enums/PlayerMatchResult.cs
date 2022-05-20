@@ -1,6 +1,6 @@
 namespace Game.AnimalFiveHead.Enums
 {
-  public enum PlayerGameResult
+  public enum PlayerMatchResult
   {
     Pending = 0,
     PlayerWin,

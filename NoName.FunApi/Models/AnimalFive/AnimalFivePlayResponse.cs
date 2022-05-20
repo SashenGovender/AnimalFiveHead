@@ -19,19 +19,12 @@ namespace NoName.FunApi.Models.AnimalFive
     [JsonPropertyName("sessionId")]
     public string? SessionId { get; init; }
 
-    public AnimalFivePlayResponse(KeeperPlayer keeper, TouristPlayer tourist, List<NormalPlayer> players, Guid gameSessionId)
+    public AnimalFivePlayResponse(BasePlayer keeper, BasePlayer tourist, List<BasePlayer> players, Guid gameSessionId)
     {
-      Keeper = new NpcBag
-      {
-        Cards = keeper.Cards,
-        Score = keeper.Score,
-      };
+      SessionId = gameSessionId.ToString();
 
-      Tourist = new NpcBag
-      {
-        Cards = tourist.Cards,
-        Score = tourist.Score,
-      };
+      Keeper = new NpcBag(keeper.Cards, keeper.Score);
+      Tourist = new NpcBag(tourist.Cards, tourist.Score);
 
       Players = new List<PlayerBag>();
       foreach (var player in players)
@@ -43,8 +36,6 @@ namespace NoName.FunApi.Models.AnimalFive
           PlayerCards = player.Cards
         });
       }
-
-      SessionId = gameSessionId.ToString();
     }
   }
 }

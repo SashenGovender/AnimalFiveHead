@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Common.DatabaseAccess.ConnectionProviders
 {
-  public class SqlConnectionProvider : IConnectionProvider
+  public class SqlConnectionProvider : IDatabaseConnectionProvider
   {
     private readonly IConfiguration _configuration;
 

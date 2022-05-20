@@ -6,13 +6,16 @@ namespace Game.AnimalFiveHead
 {
   public interface IAnimalFive
   {
-    public void Initialise(IDeck cardDeck, List<NormalPlayer> players, KeeperPlayer keeper, TouristPlayer tourist);
-    public void BeginPlay();
-    public IPlayer Chain(int playerId);
-    public void CompletePlayerGame(IPlayer player);
-    public TouristPlayer Tourist { get; }
-    public KeeperPlayer Keeper { get; }
-    public List<NormalPlayer> Players { get; }
-    public IDeck CardDeck { get; }
+    public BasePlayer Tourist { get; }
+    public BasePlayer Keeper { get; }
+    public List<BasePlayer> Players { get; }
+    public IDeck? CardDeck { get; }
+
+    public void InitialiseDeck(IDeck cardDeck);
+    public void BeginGame();
+    public BasePlayer Chain(int playerId);
+    public void PlayNpcRound();
+    public void EndGame();
+    void AddRealPlayers(int numberOfPlayers);
   }
 }

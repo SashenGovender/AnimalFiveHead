@@ -17,6 +17,6 @@ namespace NoName.FunApi.Models.AnimalFive
     public List<PlayCard>? PlayerCards { get; init; }
 
     [JsonPropertyName("result")]
-    public PlayerGameResult Result { get; init; }
+    public PlayerMatchResult Result { get; init; }
   }
 }

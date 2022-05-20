@@ -18,8 +18,7 @@ namespace NoName.FunApi.DataAccess
 
     private const string DatabaseName = "AnimalFiveHead";
     private const string UpsertPlayerSessionProc = "dbo.pr_UpsertPlayerSession";
-    private const string GetAllPlayerSessionProc = "dbo.pr_GetAllPlayerSessions";
-    private const string GetAllPlayerSpecificSessionProc = "dbo.pr_GetAllPlayerSpecificSessions";
+    private const string GetPlayerSessionProc = "dbo.pr_GetPlayerSessions";
     private const string CompleteGameSessionProc = "dbo.pr_CompleteGameSession";
 
     public AnimalFiveDatabaseAccess(IDatabaseAccess dataAccess, ILogger<AnimalFiveDatabaseAccess> logger)
@@ -34,7 +33,7 @@ namespace NoName.FunApi.DataAccess
       parameters.Add("SessionId", newPlayerData.SessionId);
       parameters.Add("PlayerId", newPlayerData.PlayerId);
       parameters.Add("Score", newPlayerData.Score);
-      parameters.Add("PlayerCards", newPlayerData.PlayerCards);
+      parameters.Add("PlayerCards", newPlayerData.Cards);
 
       try
       {
@@ -54,7 +53,7 @@ namespace NoName.FunApi.DataAccess
 
       try
       {
-        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerSessionData>(DatabaseName, GetAllPlayerSpecificSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
+        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerSessionData>(DatabaseName, GetPlayerSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
         return data;
       }
       catch (Exception ex)
@@ -77,20 +76,6 @@ namespace NoName.FunApi.DataAccess
       {
         _logger.LogError(ex, "Failed to complete game session with error message {ErrorMessage}", ex.Message);
         throw new DatabaseException("CompleteGameSession");
-      }
-    }
-
-    public async Task<IEnumerable<AnimalFivePlayerSessionData>> GetAllAsync(CancellationToken token)
-    {
-      try
-      {
-        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerSessionData>(DatabaseName, GetAllPlayerSessionProc, token, commandType: CommandType.StoredProcedure);
-        return data;
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Failed to get all session information with error message {ErrorMessage}", ex.Message);
-        throw new DatabaseException("GetAll");
       }
     }
   }

@@ -29,7 +29,6 @@ namespace Common.PlayingCards.CardDecks
     public PlayCard? GetCard()
     {
       var numCards = Cards.Count;
-
       if (numCards <= 0)
       {
         return null;
@@ -44,7 +43,6 @@ namespace Common.PlayingCards.CardDecks
     public PlayCard? GetCard(int id)
     {
       var numCards = Cards.Count;
-
       if (numCards <= 0)
       {
         return null;

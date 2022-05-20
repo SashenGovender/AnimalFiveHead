@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Common.DatabaseAccess.ConnectionProviders
 {
-  public interface IConnectionProvider
+  public interface IDatabaseConnectionProvider
   {
     Task<IDbConnection> OpenConnectionAsync(string databaseName, CancellationToken token);
   }
