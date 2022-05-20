@@ -1,0 +1,21 @@
+{
+  "name": "noname.webclient",
+  "version": "1.0.0",
+  "description": "webclient for No Name games",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "npm run build && webpack",
+    "clean": "rimraf dist"
+  },
+  "author": "Sashen Govender",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.35",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}
