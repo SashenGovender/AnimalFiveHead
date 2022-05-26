@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NoName.FunApi.DataAccess;
+using NoName.FunApi.GameManager;
 
 namespace NoName.FunApi
 {
@@ -28,6 +30,12 @@ namespace NoName.FunApi
 
       services.AddDapperDatabaseAccess();
       services.AddAnimalFiveGame();
+
+      //TODO: check how the api did this
+      services.AddTransient<IAnimalFiveDatabaseAccess, AnimalFiveDatabaseAccess>();
+      services.AddTransient<IAnimalFiveManager, AnimalFiveManager>();
+      services.AddSingleton<AnimalFiveGameSessionManager>();
+
 
       //https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0
 #pragma warning disable IDE0053 // Use expression body for lambda expressions

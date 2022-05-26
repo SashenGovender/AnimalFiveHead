@@ -83,6 +83,6 @@
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Database.AnimalFiveHead.publish.xml" />
+    <None Include="Database.AnimalFiveHead.PublishProfile.xml" />
   </ItemGroup>
 </Project>

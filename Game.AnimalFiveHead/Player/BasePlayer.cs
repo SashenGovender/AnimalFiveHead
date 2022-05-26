@@ -37,19 +37,25 @@ namespace Game.AnimalFiveHead.Player
         return 0;
       }
 
-      var sum = 0;
-      var previousCard = Cards[0];
+      var sum = Cards[0].Value;
+      var lastNonEatenCard = Cards[0];
 
       for (var index = 1; index < Cards.Count; index++)
       {
-        var rankDifference = Math.Abs(previousCard.Rank - Cards[index].Rank);
-        if (rankDifference == 1 && previousCard.Face != ProtectedCardType)
+        var rankDifference = Cards[index].Rank - lastNonEatenCard.Rank;
+        if (Math.Abs(rankDifference) > 1)
         {
-          sum = sum - previousCard.Value + Cards[index].Rank;
+          sum += Cards[index].Value;
+          lastNonEatenCard = Cards[index];
+        }
+        else if (rankDifference == 1)
+        {
+          sum -= lastNonEatenCard.Value;
+          lastNonEatenCard = Cards[index];
         }
         else
         {
-          sum += Cards[index].Value;
+          // last non eaten card is of a higher rank. lets continue and not add the current card value to the sum.
         }
       }
       return sum;

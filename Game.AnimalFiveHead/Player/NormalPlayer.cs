@@ -12,7 +12,7 @@ namespace Game.AnimalFiveHead.Player
 
     public override void Chain(Func<PlayCard> getCard)
     {
-      if (Cards.Count < 6)
+      if (Cards.Count < 5)
       {
         var card = getCard.Invoke();
         Cards.Add(card);
