@@ -1,8 +1,8 @@
 CREATE TABLE [dbo].[tb_PlayerSessionInformation]
 (
     [SessionId] UNIQUEIDENTIFIER NOT NULL, 
-    [PlayerId] TINYINT NOT NULL, 
-    [Score] SMALLINT NOT NULL, 
+    [PlayerId] INT NOT NULL, 
+    [Score] INT NOT NULL, 
     [Cards] NVARCHAR(MAX) NOT NULL, 
     [CardIds] NVARCHAR(MAX) NOT NULL, 
     [DateTimeAdded] DATETIME2 NULL, 
