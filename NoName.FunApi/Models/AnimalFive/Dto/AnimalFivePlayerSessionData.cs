@@ -1,8 +1,10 @@
+using System;
+
 namespace NoName.FunApi.Models.AnimalFive.Dto
 {
   public class AnimalFivePlayerSessionData
   {
-    public string? SessionId { get; init; }
+    public Guid? SessionId { get; init; }
     public int PlayerId { get; init; }
     public int Score { get; init; }
     public string? Cards { get; init; }

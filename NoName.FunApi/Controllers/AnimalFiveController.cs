@@ -65,6 +65,11 @@ namespace NoName.FunApi.Controllers
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> Complete([FromBody] AnimalFiveCompleteGameRequest request, CancellationToken token)
     {
+      if (!Guid.TryParse(request.SessionId, out _))
+      {
+        return BadRequest(new ErrorResponse(ErrorCodes.InvalidGameSession, "Invalid Game Session Guid"));
+      }
+
       var completeGameResponse = await _animalFiveManager.CompleteGameAsync(request, token);
 
       return Ok(completeGameResponse);

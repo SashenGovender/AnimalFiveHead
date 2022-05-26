@@ -26,17 +26,18 @@ namespace NoName.FunApi.GameManager
 
     public void SetGame(IAnimalFive animalFiveGame) => _animalFiveHeadGame = animalFiveGame;
 
-    public async Task CompleteGameSessionAsync(CancellationToken token) => await _animalDatabaseAccess.CompleteGameSessionAsync(GameSessionId, token);
+    public async Task CompleteGameSessionAsync(CancellationToken token)
+    {
+      await SaveNpcGamePlay(token);
+
+      await _animalDatabaseAccess.CompleteGameSessionAsync(GameSessionId, token);
+    }
 
     public async Task SaveGameStateAsync(CancellationToken token)
     {
-      var touristDto = CreatePlayerSessionObject(_animalFiveHeadGame!.Tourist, GameSessionId);
-      await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(touristDto, token);
+      await SaveNpcGamePlay(token);
 
-      var keeperDto = CreatePlayerSessionObject(_animalFiveHeadGame.Keeper, GameSessionId);
-      await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(keeperDto, token);
-
-      foreach (var player in _animalFiveHeadGame.Players)
+      foreach (var player in _animalFiveHeadGame!.Players)
       {
         var playerSessionDto = CreatePlayerSessionObject(player, GameSessionId);
         await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(playerSessionDto, token);
@@ -84,6 +85,15 @@ namespace NoName.FunApi.GameManager
       }
     }
 
+    private async Task SaveNpcGamePlay(CancellationToken token)
+    {
+      var touristDto = CreatePlayerSessionObject(_animalFiveHeadGame!.Tourist, GameSessionId);
+      await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(touristDto, token);
+
+      var keeperDto = CreatePlayerSessionObject(_animalFiveHeadGame.Keeper, GameSessionId);
+      await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(keeperDto, token);
+    }
+
     private static AnimalFivePlayerSessionData CreatePlayerSessionObject(BasePlayer player, Guid sessionGuid)
     {
 #pragma warning disable IDE0022 // Use expression body for methods
@@ -93,7 +103,7 @@ namespace NoName.FunApi.GameManager
         CardIds = string.Join(";", player.Cards.Select(card => card.CardId)),
         PlayerId = player.PlayerId,
         Score = player.Score,
-        SessionId = sessionGuid.ToString(),
+        SessionId = sessionGuid,
       };
     }
 

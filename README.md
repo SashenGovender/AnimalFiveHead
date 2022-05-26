@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 * Visual Studio 2022
 * .Net SDK 6+
 * Postman
-* Sql Server Management Studio
+* Sql Server Management Studio (https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
 
 
 ## Resources
