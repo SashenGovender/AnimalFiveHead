@@ -11,5 +11,6 @@ Post-Deployment Script Template
 */
 
 :r ..\dbo\Tables\Presets\dbo.tb_PlayerSessionInformation.Presets.sql
+:r ..\dbo\Tables\Presets\dbo.tb_PlayerTypes.Presets.sql
 
 :r ..\Security\NoNameUser.sql
