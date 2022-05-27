@@ -1,13 +1,15 @@
 using System;
 using Common.PlayingCards.Enums;
 using Common.PlayingCards.Models;
+using Game.AnimalFiveHead.Enums;
 
 namespace Game.AnimalFiveHead.Player
 {
-  public class KeeperPlayer : BasePlayer
+  public class NpcKeeperPlayer : BasePlayer
   {
-    public KeeperPlayer() : base(AnimalFiveHeadConstants.KeeperId, PlayCardFace.HoneyBee)
+    public NpcKeeperPlayer() : base(AnimalFiveHeadConstants.KeeperId, PlayCardFace.HoneyBee)
     {
+      GameStatus = PlayerMatchResult.NoResult;
     }
 
     public override void Chain(Func<PlayCard> getCard)

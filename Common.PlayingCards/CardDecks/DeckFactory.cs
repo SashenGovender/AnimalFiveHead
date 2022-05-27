@@ -1,9 +1,8 @@
 using System;
-using Common.PlayingCards.CardDecks;
 using Common.PlayingCards.Enums;
 using Common.PlayingCards.Exceptions;
 
-namespace Common.PlayingCards
+namespace Common.PlayingCards.CardDecks
 {
   public class DeckFactory
   {
@@ -15,11 +14,10 @@ namespace Common.PlayingCards
 
     public IDeck CreateDeck(DeckType type)
     {
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
       var deck = type switch
       {
-        DeckType.Standard => (IDeck)_serviceProvider.GetService(typeof(StandardDeck)),
-        DeckType.AnimalFiveHead => (IDeck)_serviceProvider.GetService(typeof(AnimalFiveHeadDeck)),
+        DeckType.Standard => _serviceProvider.GetService(typeof(StandardDeck)) as IDeck,
+        DeckType.AnimalFiveHead => _serviceProvider.GetService(typeof(AnimalFiveHeadDeck)) as IDeck,
         _ => null
       };
 

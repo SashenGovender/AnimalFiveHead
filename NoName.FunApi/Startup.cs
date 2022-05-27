@@ -32,9 +32,9 @@ namespace NoName.FunApi
       services.AddAnimalFiveGame();
 
       //TODO: check how the api did this
-      services.AddTransient<IAnimalFiveDatabaseAccess, AnimalFiveDatabaseAccess>();
+      services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveDatabaseAccess>();
       services.AddTransient<IAnimalFiveManager, AnimalFiveManager>();
-      services.AddSingleton<AnimalFiveGameSessionManager>();
+      services.AddTransient<IAnimalFiveDatabaseSessionManager, AnimalFiveDatabaseSessionManager>();
 
 
       //https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0

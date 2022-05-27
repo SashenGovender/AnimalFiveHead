@@ -12,10 +12,11 @@ namespace Game.AnimalFiveHead
     public IDeck? CardDeck { get; }
 
     public void InitialiseDeck(IDeck cardDeck);
+    public void AddRealPlayers(int numberOfPlayers);
     public void BeginGame();
     public BasePlayer Chain(int playerId);
     public void PlayNpcRound();
     public void EndGame();
-    void AddRealPlayers(int numberOfPlayers);
+
   }
 }

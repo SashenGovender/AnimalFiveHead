@@ -12,7 +12,7 @@ namespace NoName.FunApi.Models
     {
       ErrorCode = errorCode;
       Message = message;
-      SourceApplication = "AnimalFiveHead.FunApi";
+      SourceApplication = "NoName.FunApi";
     }
   }
 }

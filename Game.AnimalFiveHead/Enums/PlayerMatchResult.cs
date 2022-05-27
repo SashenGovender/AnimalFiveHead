@@ -6,6 +6,7 @@ namespace Game.AnimalFiveHead.Enums
     PlayerWin,
     KeeperWin,
     TouristWin,
-    Draw
+    Draw,
+    NoResult
   }
 }

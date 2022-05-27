@@ -8,8 +8,8 @@ namespace NoName.FunApi.DataAccess
 {
   public interface IAnimalFiveDatabaseAccess
   {
-    Task<IEnumerable<AnimalFivePlayerSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token);
-    Task UpsertPlayerSessionInformationAsync(AnimalFivePlayerSessionData newPlayerData, CancellationToken token);
+    Task<IEnumerable<AnimalFivePlayerGetSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token);
+    Task UpsertPlayerSessionInformationAsync(AnimalFivePlayerSaveSessionData newPlayerData, CancellationToken token);
     Task CompleteGameSessionAsync(Guid gameSessionId, CancellationToken token);
   }
 }

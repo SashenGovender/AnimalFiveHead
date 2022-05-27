@@ -27,7 +27,7 @@ namespace NoName.FunApi.DataAccess
       _logger = logger;
     }
 
-    public async Task UpsertPlayerSessionInformationAsync(AnimalFivePlayerSessionData newPlayerData, CancellationToken token)
+    public async Task UpsertPlayerSessionInformationAsync(AnimalFivePlayerSaveSessionData newPlayerData, CancellationToken token)
     {
       var parameters = new DynamicParameters();
       parameters.Add("SessionId", newPlayerData.SessionId);
@@ -35,6 +35,7 @@ namespace NoName.FunApi.DataAccess
       parameters.Add("Score", newPlayerData.Score);
       parameters.Add("Cards", newPlayerData.Cards);
       parameters.Add("CardIds", newPlayerData.CardIds);
+      parameters.Add("Result", newPlayerData.Result);
 
       try
       {
@@ -47,14 +48,14 @@ namespace NoName.FunApi.DataAccess
       }
     }
 
-    public async Task<IEnumerable<AnimalFivePlayerSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token)
+    public async Task<IEnumerable<AnimalFivePlayerGetSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token)
     {
       var parameters = new DynamicParameters();
       parameters.Add("SessionId", sessionId.ToString());
 
       try
       {
-        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerSessionData>(DatabaseName, GetGameSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
+        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerGetSessionData>(DatabaseName, GetGameSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
         return data;
       }
       catch (Exception ex)

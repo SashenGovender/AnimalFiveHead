@@ -21,6 +21,8 @@ namespace Game.AnimalFiveHead.Player
       Cards = new List<PlayCard>();
     }
 
+    public abstract void Chain(Func<PlayCard> getCard);
+
     public void AddCard(PlayCard card)
     {
       if (card != null)
@@ -28,7 +30,6 @@ namespace Game.AnimalFiveHead.Player
         Cards.Add(card);
       }
     }
-    public abstract void Chain(Func<PlayCard> getCard);
 
     private int CalculateScore()
     {

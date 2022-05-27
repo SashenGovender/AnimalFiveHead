@@ -4,9 +4,9 @@ using Common.PlayingCards.Models;
 
 namespace Game.AnimalFiveHead.Player
 {
-  public class NormalPlayer : BasePlayer
+  public class RealPlayer : BasePlayer
   {
-    public NormalPlayer(int playerId) : base(playerId, PlayCardFace.None)
+    public RealPlayer(int playerId) : base(playerId, PlayCardFace.None)
     {
     }
 
