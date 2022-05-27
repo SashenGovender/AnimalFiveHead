@@ -70,11 +70,13 @@
     <Build Include="dbo\StoredProcedures\dbo.pr_GetGameSession.sql" />
     <Build Include="dbo\StoredProcedures\dbo.pr_CompleteGameSession.sql" />
     <Build Include="dbo\Tables\dbo.tb_GameSessionStates.sql" />
-    <None Include="dbo\Tables\Presets\dbo.tb_PlayerSessionInformation.Presets.sql" />
+    <None Include="dbo\Tables\Presets\dbo.tb_GameSessionStates.Presets.sql" />
     <Build Include="Security\NoNameLogin.sql" />
     <Build Include="Security\NoNameUser.sql" />
     <Build Include="dbo\Tables\dbo.tb_PlayerTypes.sql" />
     <None Include="dbo\Tables\Presets\dbo.tb_PlayerTypes.Presets.sql" />
+    <None Include="dbo\Tables\Presets\dbo.tb_GameResults.Presets.sql" />
+    <Build Include="dbo\Tables\dbo.tb_GameResults.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database.AnimalFiveHead.refactorlog" />
