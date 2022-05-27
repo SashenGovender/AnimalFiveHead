@@ -9,8 +9,8 @@ namespace Common.PlayingCards.Extensions
     public static IServiceCollection AddPlayingDeck(this IServiceCollection services)
     {
       services.AddSingleton<DeckFactory>();
-      services.AddSingleton<StandardDeck>();
-      services.AddSingleton<AnimalFiveHeadDeck>();
+      services.AddTransient<StandardDeck>();
+      services.AddTransient<AnimalFiveHeadDeck>();
 
       services.AddRandomNumberGenerator();
 

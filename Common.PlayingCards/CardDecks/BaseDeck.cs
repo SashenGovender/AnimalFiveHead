@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Common.PlayingCards.Models;
 using Common.Utilities.Randomizer;
 
@@ -10,7 +9,7 @@ namespace Common.PlayingCards.CardDecks
     private readonly IRandomNumberGenerator _randomNumberGenerator;
     private const int NumberTimesToShuffle = 5;
 
-    public List<PlayCard> Cards { get; }
+    public List<PlayCard> Cards { get; init; }
 
     protected BaseDeck(IRandomNumberGenerator randomNumberGenerator)
     {
@@ -48,14 +47,13 @@ namespace Common.PlayingCards.CardDecks
         return null;
       }
 
-      var deckHasCard = Cards.Exists(c => c.CardId == id);
-      if (!deckHasCard)
+      var card = Cards.Find(c => c.CardId == id);
+      if (card is null)
       {
         return null;
       }
 
-      var card = Cards.FirstOrDefault(c => c.CardId == id);
-      Cards.Remove(card!);
+      Cards.Remove(card);
 
       return card;
     }
