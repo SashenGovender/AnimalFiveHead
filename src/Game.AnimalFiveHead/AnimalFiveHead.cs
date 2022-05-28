@@ -73,13 +73,9 @@ namespace Game.AnimalFiveHead
         {
           player.GameStatus = PlayerMatchResult.PlayerWin;
         }
-        else if (playerScore > keeperScore && playerScore < touristScore)
+        else if (playerScore < keeperScore || playerScore < touristScore)
         {
-          player.GameStatus = PlayerMatchResult.TouristWin;
-        }
-        else if (playerScore < keeperScore && playerScore > touristScore)
-        {
-          player.GameStatus = PlayerMatchResult.KeeperWin;
+          player.GameStatus = PlayerMatchResult.NpcWin;
         }
         else
         {

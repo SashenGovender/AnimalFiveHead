@@ -35,7 +35,7 @@ namespace NoName.FunApi.DataAccess
       parameters.Add("Score", newPlayerData.Score);
       parameters.Add("Cards", newPlayerData.Cards);
       parameters.Add("CardIds", newPlayerData.CardIds);
-      parameters.Add("Result", newPlayerData.Result);
+      parameters.Add("GameResult", newPlayerData.Result.ToString());
 
       try
       {

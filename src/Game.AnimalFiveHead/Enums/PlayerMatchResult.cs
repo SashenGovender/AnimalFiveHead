@@ -4,8 +4,7 @@ namespace Game.AnimalFiveHead.Enums
   {
     Pending = 0,
     PlayerWin,
-    KeeperWin,
-    TouristWin,
+    NpcWin,
     Draw,
     NoResult
   }
