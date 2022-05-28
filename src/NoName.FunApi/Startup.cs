@@ -32,13 +32,9 @@ namespace NoName.FunApi
       services.AddEndpointsApiExplorer();
       services.AddSwaggerGen();
 
-      services.AddDapperDatabaseAccess();
-      services.AddAnimalFiveGame();
-
-      services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveDatabaseAccess>();
-      services.AddTransient<IAnimalFiveManager, AnimalFiveManager>();
-      services.AddTransient<IAnimalFiveDatabaseSessionManager, AnimalFiveDatabaseSessionManager>();
-
+      //https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-6.0
+      services.AddHealthChecks()
+        .AddSqlServer(Configuration.GetConnectionString("AnimalFiveHead"));
 
       //https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0
 #pragma warning disable IDE0053 // Use expression body for lambda expressions
@@ -55,13 +51,14 @@ namespace NoName.FunApi
       });
 #pragma warning restore IDE0053 // Use expression body for lambda expressions
 
-      //services.Configure<DatabaseConnectionInformation>(Configuration.GetSection("AnimalFiveDatabaseConnectionInformation"))
+      services.AddDapperDatabaseAccess();
+      services.AddAnimalFiveGame();
 
-      //services
-      //    .AddControllers()
-      //    .AddJsonOptions(options =>
-      //        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
-      //    );
+      services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveDatabaseAccess>();
+      services.AddTransient<IAnimalFiveManager, AnimalFiveManager>();
+      services.AddTransient<IAnimalFiveDatabaseSessionManager, AnimalFiveDatabaseSessionManager>();
+
+      //services.Configure<DatabaseConnectionInformation>(Configuration.GetSection("AnimalFiveDatabaseConnectionInformation"))
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,6 +89,7 @@ namespace NoName.FunApi
 #pragma warning disable IDE0053 // Use expression body for lambda expressions
       app.UseEndpoints(endpoints =>
       {
+        endpoints.MapHealthChecks("/health");
         endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "api/{controller=Values}/{action=Index}/{id?}");
