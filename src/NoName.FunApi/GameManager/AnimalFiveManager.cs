@@ -10,10 +10,10 @@ namespace NoName.FunApi.GameManager
 {
   public class AnimalFiveManager : IAnimalFiveManager
   {
-    private readonly AnimalFiveDatabaseSessionManager _gameSessionManager;
+    private readonly IAnimalFiveDatabaseSessionManager _gameSessionManager;
     private readonly IAnimalFive _animalFiveGame;
 
-    public AnimalFiveManager(AnimalFiveDatabaseSessionManager gameSessionManager, IAnimalFive animalFiveGame, DeckFactory deckFactory)
+    public AnimalFiveManager(IAnimalFiveDatabaseSessionManager gameSessionManager, IAnimalFive animalFiveGame, DeckFactory deckFactory)
     {
       _gameSessionManager = gameSessionManager;
       _animalFiveGame = animalFiveGame;
