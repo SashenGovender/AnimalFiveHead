@@ -3,7 +3,8 @@ namespace NoName.FunApi.Enums
   public enum ErrorCodes
   {
     NegativeNumberOfPlayers = 1,
-    InvalidGameSession = 2,
+    SessionIdIsNotAGuid = 2,
+    SessionIdDoesNotExistOrIsNotActive = 3,
   };
 }
 

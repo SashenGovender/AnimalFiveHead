@@ -20,6 +20,7 @@ namespace NoName.FunApi.DataAccess
     private const string UpsertPlayerSessionProc = "dbo.pr_UpsertPlayerSession";
     private const string GetGameSessionProc = "dbo.pr_GetGameSession";
     private const string CompleteGameSessionProc = "dbo.pr_CompleteGameSession";
+    private const string GameSessionExistAndActiveProc = "dbo.pr_GameSessionExistAndActive";
 
     public AnimalFiveDatabaseAccess(IDatabaseAccess dataAccess, ILogger<AnimalFiveDatabaseAccess> logger)
     {
@@ -78,6 +79,23 @@ namespace NoName.FunApi.DataAccess
       {
         _logger.LogError(ex, "Failed to complete game session with error message {ErrorMessage}", ex.Message);
         throw new DatabaseException("CompleteGameSession");
+      }
+    }
+
+    public async Task<bool> GameSessionExistsAndActiveAsync(Guid gameSessionId, CancellationToken token)
+    {
+      var parameters = new DynamicParameters();
+      parameters.Add("SessionId", gameSessionId.ToString());
+
+      try
+      {
+        var exists = await _databaseAccess.QueryFirstAsync<int>(DatabaseName, GameSessionExistAndActiveProc, token, parameters, commandType: CommandType.StoredProcedure);
+        return exists == 1;
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Failed to complete game session with error message {ErrorMessage}", ex.Message);
+        throw new DatabaseException("GameSessionExistsAndActive");
       }
     }
   }

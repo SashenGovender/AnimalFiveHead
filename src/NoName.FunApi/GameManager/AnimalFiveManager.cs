@@ -42,8 +42,8 @@ namespace NoName.FunApi.GameManager
 
     public async Task<AnimalFiveChainResponse> ChainAsync(AnimalFiveChainRequest request, CancellationToken token)
     {
-      //TODO: Check if SessionID is valid and actually exists
-      _gameSessionManager.CreateOrSetSessionId(Guid.Parse(request.SessionId!));
+      var receivedSessionId = Guid.Parse(request.SessionId!);
+      _gameSessionManager.CreateOrSetSessionId(receivedSessionId);
 
       await _gameSessionManager.RestoreGameStateAsync(token);
 
@@ -70,6 +70,8 @@ namespace NoName.FunApi.GameManager
       var gameResults = new AnimalFiveCompleteGameResponse(request.SessionId, _animalFiveGame);
       return gameResults;
     }
+
+    public async Task<bool> IsValidSessionGuid(Guid sessionId, CancellationToken token) => await _gameSessionManager.CheckIfValidSessionId(sessionId, token);
 
   }
 }

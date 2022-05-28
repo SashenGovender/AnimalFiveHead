@@ -49,9 +49,15 @@ namespace NoName.FunApi.Controllers
         return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Cannot have Negative number of players"));
       }
 
-      if (!Guid.TryParse(request.SessionId, out _))
+      if (!Guid.TryParse(request.SessionId, out var sessionGuid))
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.InvalidGameSession, "Invalid Game Session Guid"));
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid"));
+      }
+
+      var sessionExistsAndActive = await _animalFiveManager.IsValidSessionGuid(sessionGuid, token);
+      if (sessionExistsAndActive is false)
+      {
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active"));
       }
 
       var chainResponse = await _animalFiveManager.ChainAsync(request, token);
@@ -65,9 +71,15 @@ namespace NoName.FunApi.Controllers
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> Complete([FromBody] AnimalFiveCompleteGameRequest request, CancellationToken token)
     {
-      if (!Guid.TryParse(request.SessionId, out _))
+      if (!Guid.TryParse(request.SessionId, out var sessionGuid))
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.InvalidGameSession, "Invalid Game Session Guid"));
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid"));
+      }
+
+      var sessionExistsAndActive = await _animalFiveManager.IsValidSessionGuid(sessionGuid, token);
+      if (sessionExistsAndActive is false)
+      {
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active"));
       }
 
       var completeGameResponse = await _animalFiveManager.CompleteGameAsync(request, token);

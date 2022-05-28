@@ -11,5 +11,6 @@ namespace NoName.FunApi.DataAccess
     Task<IEnumerable<AnimalFivePlayerGetSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token);
     Task UpsertPlayerSessionInformationAsync(AnimalFivePlayerSaveSessionData newPlayerData, CancellationToken token);
     Task CompleteGameSessionAsync(Guid gameSessionId, CancellationToken token);
+    Task<bool> GameSessionExistsAndActiveAsync(Guid gameSessionId, CancellationToken token);
   }
 }

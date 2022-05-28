@@ -76,6 +76,7 @@
     <None Include="dbo\Tables\Presets\dbo.tb_PlayerTypes.Presets.sql" />
     <Build Include="dbo\StoredProcedures\dbo.pr_UpsertPlayerType.sql" />
     <Build Include="dbo\StoredProcedures\dbo.pr_UpsertGameSessionState.sql" />
+    <Build Include="dbo\StoredProcedures\dbo.pr_GameSessionExistAndActive.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database.AnimalFiveHead.refactorlog" />

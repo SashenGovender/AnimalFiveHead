@@ -60,6 +60,8 @@ namespace NoName.FunApi.GameManager
       }
     }
 
+    public async Task<bool> CheckIfValidSessionId(Guid sessionId, CancellationToken token) => await _animalDatabaseAccess.GameSessionExistsAndActiveAsync(sessionId, token);
+
     private BasePlayer PlayerToRestore(int playerId)
     {
       switch (playerId)
@@ -111,6 +113,5 @@ namespace NoName.FunApi.GameManager
         Result = player.GameStatus
       };
     }
-
   }
 }
