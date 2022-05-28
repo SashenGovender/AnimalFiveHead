@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using NoName.FunApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 
-namespace BasicApi.Controllers
+namespace NoName.FunApi.Controllers
 {
   [ApiController]
   [Route("[controller]")]

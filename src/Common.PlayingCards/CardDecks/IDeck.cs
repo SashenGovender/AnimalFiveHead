@@ -3,7 +3,7 @@ using Common.PlayingCards.Models;
 
 namespace Common.PlayingCards.CardDecks
 {
-  //TODO: Do i need this interface as i am using an abstract class
+  //Design: Do i need this interface as i am using an abstract class
   public interface IDeck
   {
     public void AddCard(PlayCard card);

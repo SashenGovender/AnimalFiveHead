@@ -1,6 +1,6 @@
 using System;
 
-namespace BasicApi
+namespace NoName.FunApi.Models
 {
   public class WeatherForecast
   {
