@@ -7,7 +7,6 @@ namespace Common.DatabaseAccess.Extensions
   {
     public static IServiceCollection AddDapperDatabaseAccess(this IServiceCollection services)
     {
-      //TODO: Check DI stuff
       services.AddSingleton<IDatabaseConnectionProvider, SqlConnectionProvider>();
       services.AddSingleton<IDatabaseAccess, DapperDatabaseAccess>();
 

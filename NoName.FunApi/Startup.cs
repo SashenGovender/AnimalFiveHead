@@ -31,7 +31,6 @@ namespace NoName.FunApi
       services.AddDapperDatabaseAccess();
       services.AddAnimalFiveGame();
 
-      //TODO: check how the api did this
       services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveDatabaseAccess>();
       services.AddTransient<IAnimalFiveManager, AnimalFiveManager>();
       services.AddTransient<IAnimalFiveDatabaseSessionManager, AnimalFiveDatabaseSessionManager>();
