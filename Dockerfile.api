@@ -1,0 +1,46 @@
+# https://docs.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows
+# https://docs.docker.com/develop/develop-images/multistage-build/
+# https://docs.docker.com/samples/dotnetcore/
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+
+# Set the container working directory
+WORKDIR /app
+
+# Copy everything
+COPY src/ ./
+
+# Restore as distinct layers
+RUN dotnet restore ./NoName.FunApi/NoName.FunApi.csproj
+
+# Build and publish a release
+RUN dotnet publish ./NoName.FunApi/NoName.FunApi.csproj -c Release -o /app/publish
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+
+EXPOSE 80
+EXPOSE 443
+
+WORKDIR /app
+
+COPY --from=build /app/publish ./
+
+ENTRYPOINT ["dotnet", "NoName.FunApi.dll"]
+
+# Commands
+# BUILD
+# docker build -t nonameapiimg -f Dockerfile.api .   This builds the image
+# This creates and runs the container
+
+# RUN
+# Detached (-d) 	--> --detach or -d , means that a Docker container runs in the background of your terminal. It does not receive input or display output
+# interactive(-it) 	--> This means you can execute commands inside the container while it is still running
+# --name			-->	Assign a name to the container
+# -p 				--> Exposes the ports. Specifies the port inside and outside the container. -p hostPort:containerPort (80:8080 - This binds port 8080 of the container to TCP port 80 on the host machine.)
+# https://docs.docker.com/engine/reference/run/
+# https://docs.docker.com/engine/reference/commandline/run/
+# docker run -it -p 9000:80 --name nonameapicontainer nonameapiimg
+
+# STOP
+# docker rm <container_name>
