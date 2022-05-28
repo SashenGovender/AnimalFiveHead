@@ -58,7 +58,7 @@ namespace Common.PlayingCards.CardDecks
       return card;
     }
 
-    //Design: Should this be part of the BaseDeck or a user of this object
+    //TODO: Design: Should this be part of the BaseDeck or a user of this object
     public void Shuffle()
     {
       var numCards = Cards.Count;

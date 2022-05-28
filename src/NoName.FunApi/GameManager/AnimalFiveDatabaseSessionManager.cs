@@ -92,7 +92,7 @@ namespace NoName.FunApi.GameManager
 
     private async Task SaveNpcGamePlayAsync(CancellationToken token)
     {
-      //TODO: Dapper to return multiple results
+      //TODO: Design: Dapper to return multiple results
       var touristDto = CreatePlayerSaveSession(_animalFiveHeadGame!.Tourist);
       await _animalDatabaseAccess.UpsertPlayerSessionInformationAsync(touristDto, token);
 

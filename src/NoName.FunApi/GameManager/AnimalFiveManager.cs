@@ -35,9 +35,6 @@ namespace NoName.FunApi.GameManager
 
       var playResponse = new AnimalFivePlayResponse(_animalFiveGame.Keeper, _animalFiveGame.Tourist, _animalFiveGame.Players, _gameSessionManager.GameSessionId);
       return playResponse;
-
-      // JsonSerializer.Serialize(playResponse);
-      // return JsonConvert.SerializeObject(playResponse);
     }
 
     public async Task<AnimalFiveChainResponse> ChainAsync(AnimalFiveChainRequest request, CancellationToken token)
