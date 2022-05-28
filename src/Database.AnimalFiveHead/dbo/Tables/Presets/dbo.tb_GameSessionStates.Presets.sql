@@ -1,3 +1,8 @@
- INSERT INTO dbo.tb_GameSessionStates (GameState) Values ('Active');
 
- INSERT INTO dbo.tb_GameSessionStates (GameState) Values ('Complete');
+EXEC dbo.pr_GetGameSession
+  @GameStateId = 1,
+  @GameStateName = 'Active'
+
+EXEC dbo.pr_GetGameSession
+  @GameStateId = 2,
+  @GameStateName = 'Complete'

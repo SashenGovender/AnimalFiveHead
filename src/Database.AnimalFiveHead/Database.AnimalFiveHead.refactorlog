@@ -28,4 +28,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="GameResult" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2f61b1cb-4f60-4d13-9e0a-ddc480a50736" ChangeDateTime="05/28/2022 18:40:26">
+    <Property Name="ElementName" Value="[dbo].[tb_GameSessionStates].[Gas]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tb_GameSessionStates]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GameStateId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3cb65ab0-2f57-4190-9675-692b3e00e30a" ChangeDateTime="05/28/2022 18:54:18">
+    <Property Name="ElementName" Value="[dbo].[tb_GameSessionState].[GameState]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tb_GameSessionState]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GameStateName" />
+  </Operation>
 </Operations>

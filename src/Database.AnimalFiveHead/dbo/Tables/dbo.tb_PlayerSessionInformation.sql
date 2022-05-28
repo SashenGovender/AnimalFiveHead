@@ -6,8 +6,8 @@ CREATE TABLE [dbo].[tb_PlayerSessionInformation]
     [Cards] NVARCHAR(MAX) NOT NULL, 
     [CardIds] NVARCHAR(MAX) NOT NULL, 
     [GameSession] NCHAR(10) NOT NULL,
-    [GameResult] INT NOT NULL,
-    [DateTimeAdded] DATETIME2 NULL, 
+    [GameResult] NVARCHAR(50) NOT NULL,
+    [DateTimeAdded] DATETIME2 NOT NULL, 
     [DateTimeUpdated] DATETIME2 NULL,
     CONSTRAINT [PK_PlayerSessionInformation] PRIMARY KEY ([SessionId], [PlayerId]) 
 )

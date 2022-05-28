@@ -4,7 +4,7 @@ CREATE PROCEDURE [dbo].[pr_UpsertPlayerSession]
   @Score int,
   @Cards nvarchar(MAX),
   @CardIds nvarchar(MAX),
-  @GameResult int
+  @GameResult nvarchar(50)
 
 AS
   BEGIN

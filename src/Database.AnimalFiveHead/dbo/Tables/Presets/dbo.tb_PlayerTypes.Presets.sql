@@ -1,4 +1,9 @@
- INSERT INTO dbo.tb_PlayerTypes (PlayerName, PlayerId) Values ('TouristPlayer', 100);
 
- INSERT INTO dbo.tb_PlayerTypes (PlayerName, PlayerId) Values ('KeeperPlayer', 101);
+EXEC dbo.pr_UpsertPlayerType
+  @PlayerId = 100,
+  @PlayerName = 'TouristPlayer'
+
+EXEC dbo.pr_UpsertPlayerType
+  @PlayerId = 101,
+  @PlayerName = 'KeeperPlayer'
 

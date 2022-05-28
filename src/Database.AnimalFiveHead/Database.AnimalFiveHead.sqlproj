@@ -69,14 +69,13 @@
     <Build Include="dbo\StoredProcedures\dbo.pr_UpsertPlayerSession.sql" />
     <Build Include="dbo\StoredProcedures\dbo.pr_GetGameSession.sql" />
     <Build Include="dbo\StoredProcedures\dbo.pr_CompleteGameSession.sql" />
-    <Build Include="dbo\Tables\dbo.tb_GameSessionStates.sql" />
+    <Build Include="dbo\Tables\dbo.tb_GameSessionState.sql" />
     <None Include="dbo\Tables\Presets\dbo.tb_GameSessionStates.Presets.sql" />
-    <None Include="Security\NoNameLogin.sql" />
     <None Include="Security\NoNameUser.sql" />
-    <Build Include="dbo\Tables\dbo.tb_PlayerTypes.sql" />
+    <Build Include="dbo\Tables\dbo.tb_PlayerType.sql" />
     <None Include="dbo\Tables\Presets\dbo.tb_PlayerTypes.Presets.sql" />
-    <None Include="dbo\Tables\Presets\dbo.tb_GameResults.Presets.sql" />
-    <Build Include="dbo\Tables\dbo.tb_GameResults.sql" />
+    <Build Include="dbo\StoredProcedures\dbo.pr_UpsertPlayerType.sql" />
+    <Build Include="dbo\StoredProcedures\dbo.pr_UpsertGameSessionState.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database.AnimalFiveHead.refactorlog" />
