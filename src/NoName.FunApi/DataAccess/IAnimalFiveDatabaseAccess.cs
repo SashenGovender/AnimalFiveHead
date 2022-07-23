@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using NoName.FunApi.Models.AnimalFive.Dto;
+using Common.Models.Domain.AnimalFiveHead;
 
 namespace NoName.FunApi.DataAccess
 {

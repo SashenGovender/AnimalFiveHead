@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Game.AnimalFiveHead;
 using Game.AnimalFiveHead.Player;
 
-namespace NoName.FunApi.GameManager
+namespace NoName.FunApi.SessionManager
 {
-  public interface IAnimalFiveDatabaseSessionManager
+  public interface IAnimalFiveHeadSessionManager
   {
     public Guid GameSessionId { get; }
     public void CreateOrSetSessionId(Guid? sessionId = null);
-    public void SetGame(IAnimalFive animalFiveGame);
+    public void SetGame(IAnimalFiveHeadGame animalFiveGame);
     public Task SaveGameStateAsync(CancellationToken token);
     public Task UpdatePlayerGameStateAsync(BasePlayer newPlayerData, CancellationToken token);
     public Task CompleteGameSessionAsync(CancellationToken token);

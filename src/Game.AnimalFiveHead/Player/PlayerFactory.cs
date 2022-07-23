@@ -1,19 +1,24 @@
+using Game.AnimalFiveHead.Enums;
+using Game.AnimalFiveHead.Exceptions;
+
 namespace Game.AnimalFiveHead.Player
 {
   public class PlayerFactory : IPlayerFactory
   {
-
-    public BasePlayer GetPlayer(int playerId)
+    public BasePlayer GetNpcPlayer(NpcPlayerType playerType)
     {
-      BasePlayer player = playerId switch
+      BasePlayer player = playerType switch
       {
-        AnimalFiveHeadConstants.KeeperId => new NpcKeeperPlayer(),
-        AnimalFiveHeadConstants.TouristId => new NpcTouristPlayer(),
-        _ => new RealPlayer(playerId),
+        NpcPlayerType.KeeperId => new NpcKeeperPlayer(),
+        NpcPlayerType.TouristId => new NpcTouristPlayer(),
+        NpcPlayerType.NpcPlayerStartRange => throw new InvalidPlayerTypeException(playerType),
+        NpcPlayerType.NpcPlayerEndRange => throw new InvalidPlayerTypeException(playerType),
+        _ => throw new InvalidPlayerTypeException(playerType)
       };
 
       return player;
     }
 
+    public BasePlayer GetRealPlayer(int playerId) => new RealPlayer(playerId);
   }
 }

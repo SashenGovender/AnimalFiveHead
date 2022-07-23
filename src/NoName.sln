@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database.Entity.AnimalFiveH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.DatabaseDapperAccess", "Common.DatabaseDapperAccess\Common.DatabaseDapperAccess.csproj", "{D8F5268D-988D-4D5A-99E9-5155E310E1E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Models", "Common.Models\Common.Models.csproj", "{3857DDEB-A8C4-4165-B1A3-C54B0AC4DEEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{D8F5268D-988D-4D5A-99E9-5155E310E1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8F5268D-988D-4D5A-99E9-5155E310E1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8F5268D-988D-4D5A-99E9-5155E310E1E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3857DDEB-A8C4-4165-B1A3-C54B0AC4DEEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3857DDEB-A8C4-4165-B1A3-C54B0AC4DEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3857DDEB-A8C4-4165-B1A3-C54B0AC4DEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3857DDEB-A8C4-4165-B1A3-C54B0AC4DEEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{C8F49B4C-4924-498D-99B6-08A444873031} = {853937B2-9CA5-49C2-9EB1-34C7513A5027}
 		{949E049F-104A-464A-B6ED-8DA52B55F594} = {853937B2-9CA5-49C2-9EB1-34C7513A5027}
 		{D8F5268D-988D-4D5A-99E9-5155E310E1E0} = {35AEA6B7-D5B9-4B69-9C63-BAFE7F745453}
+		{3857DDEB-A8C4-4165-B1A3-C54B0AC4DEEF} = {35AEA6B7-D5B9-4B69-9C63-BAFE7F745453}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B6542307-181D-4B5F-BC5B-7A1B1E6B47D9}

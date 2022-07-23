@@ -4,19 +4,18 @@ using Game.AnimalFiveHead.Player;
 
 namespace Game.AnimalFiveHead
 {
-  public interface IAnimalFive
+  public interface IAnimalFiveHeadGame
   {
-    public BasePlayer Tourist { get; }
-    public BasePlayer Keeper { get; }
-    public List<BasePlayer> Players { get; }
+    public List<BasePlayer> NpcPlayers { get; }
+    public List<BasePlayer> RealPlayers { get; }
     public IDeck? CardDeck { get; }
 
     public void InitialiseDeck(IDeck cardDeck);
+    public void AddNpcPlayers();
     public void AddRealPlayers(int numberOfPlayers);
     public void BeginGame();
     public BasePlayer Chain(int playerId);
     public void PlayNpcRound();
     public void EndGame();
-
   }
 }

@@ -8,7 +8,7 @@ namespace Game.AnimalFiveHead.Extensions
   {
     public static IServiceCollection AddAnimalFiveGame(this IServiceCollection services)
     {
-      services.AddTransient<IAnimalFive, AnimalFiveHead>();
+      services.AddTransient<IAnimalFiveHeadGame, AnimalFiveHeadGame>();
       services.AddSingleton<IPlayerFactory, PlayerFactory>();
 
       services.AddPlayingDeck();

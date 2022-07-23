@@ -8,22 +8,20 @@ using Game.AnimalFiveHead.Player;
 
 namespace Game.AnimalFiveHead
 {
-  public class AnimalFiveHead : IAnimalFive
+  public class AnimalFiveHeadGame : IAnimalFiveHeadGame
   {
     private readonly IPlayerFactory _playerFactory;
 
-    public BasePlayer Tourist { get; init; }
-    public BasePlayer Keeper { get; init; }
-    public List<BasePlayer> Players { get; init; }
+    public List<BasePlayer> NpcPlayers { get; init; }
+    public List<BasePlayer> RealPlayers { get; init; }
     public IDeck? CardDeck { get; private set; }
 
-    public AnimalFiveHead(IPlayerFactory playerFactory)
+    public AnimalFiveHeadGame(IPlayerFactory playerFactory)
     {
       _playerFactory = playerFactory;
 
-      Players = new List<BasePlayer>();
-      Keeper = _playerFactory.GetPlayer(AnimalFiveHeadConstants.KeeperId);
-      Tourist = _playerFactory.GetPlayer(AnimalFiveHeadConstants.TouristId);
+      RealPlayers = new List<BasePlayer>();
+      NpcPlayers = new List<BasePlayer>();
     }
 
     public void InitialiseDeck(IDeck cardDeck) => CardDeck = cardDeck;
@@ -32,24 +30,32 @@ namespace Game.AnimalFiveHead
     {
       for (var playerId = 0; playerId < numberOfPlayers; playerId++)
       {
-        Players.Add(_playerFactory.GetPlayer(playerId));
+        RealPlayers.Add(_playerFactory.GetRealPlayer(playerId));
       }
+    }
+
+    public void AddNpcPlayers()
+    {
+      NpcPlayers.Add(_playerFactory.GetNpcPlayer(NpcPlayerType.KeeperId));
+      NpcPlayers.Add(_playerFactory.GetNpcPlayer(NpcPlayerType.TouristId));
     }
 
     public void BeginGame()
     {
-      foreach (var player in Players)
+      foreach (var realPlayer in RealPlayers)
       {
-        player.AddCard(GetCard());
+        realPlayer.AddCard(GetCard());
       }
 
-      Keeper.AddCard(GetCard());
-      Tourist.AddCard(GetCard());
+      foreach (var npcPlayer in NpcPlayers)
+      {
+        npcPlayer.AddCard(GetCard());
+      }
     }
 
     public BasePlayer Chain(int playerId)
     {
-      var player = Players.First(player => player.PlayerId == playerId);
+      var player = RealPlayers.First(player => player.PlayerId == playerId);
       player.Chain(GetCard);
 
       return player;
@@ -57,23 +63,24 @@ namespace Game.AnimalFiveHead
 
     public void PlayNpcRound()
     {
-      Tourist.Chain(GetCard);
-      Keeper.Chain(GetCard);
+      foreach (var npcPlayer in NpcPlayers)
+      {
+        npcPlayer.Chain(GetCard);
+      }
     }
 
     public void EndGame()
     {
-      var keeperScore = Keeper.Score;
-      var touristScore = Tourist.Score;
+      var maxNpcPlayerScore = NpcPlayers.Max(player => player.Score);
 
-      foreach (var player in Players)
+      foreach (var player in RealPlayers)
       {
         var playerScore = player.Score;
-        if (playerScore > keeperScore && playerScore > touristScore)
+        if (playerScore > maxNpcPlayerScore)
         {
           player.GameStatus = PlayerMatchResult.PlayerWin;
         }
-        else if (playerScore < keeperScore || playerScore < touristScore)
+        else if (playerScore < maxNpcPlayerScore)
         {
           player.GameStatus = PlayerMatchResult.NpcWin;
         }
@@ -83,6 +90,7 @@ namespace Game.AnimalFiveHead
         }
       }
     }
+
 
     private PlayCard GetCard() => CardDeck!.GetCard() ?? throw new NoCardException();
   }

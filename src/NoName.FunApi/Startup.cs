@@ -7,7 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NoName.FunApi.DataAccess;
-using NoName.FunApi.GameManager;
+using NoName.FunApi.Services;
+using NoName.FunApi.SessionManager;
 
 namespace NoName.FunApi
 {
@@ -54,9 +55,9 @@ namespace NoName.FunApi
       services.AddDapperDatabaseAccess();
       services.AddAnimalFiveGame();
 
-      services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveDatabaseAccess>();
-      services.AddTransient<IAnimalFiveManager, AnimalFiveManager>();
-      services.AddTransient<IAnimalFiveDatabaseSessionManager, AnimalFiveDatabaseSessionManager>();
+      services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveHeadDapperDatabaseAccess>();
+      services.AddTransient<IAnimalFiveHeadService, AnimalFiveHeadService>();
+      services.AddTransient<IAnimalFiveHeadSessionManager, AnimalFiveHeadDatabaseSessionManager>();
 
       //services.Configure<DatabaseConnectionInformation>(Configuration.GetSection("AnimalFiveDatabaseConnectionInformation"))
     }

@@ -2,11 +2,11 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Models.Contract.AnimalFiveHead;
 using Microsoft.AspNetCore.Mvc;
 using NoName.FunApi.Enums;
-using NoName.FunApi.GameManager;
 using NoName.FunApi.Models;
-using NoName.FunApi.Models.AnimalFive;
+using NoName.FunApi.Services;
 
 namespace NoName.FunApi.Controllers
 {
@@ -15,25 +15,25 @@ namespace NoName.FunApi.Controllers
   [ApiController]
   public class AnimalFiveController : ControllerBase
   {
-    private readonly IAnimalFiveManager _animalFiveManager;
+    private readonly IAnimalFiveHeadService _animalFiveService;
 
-    public AnimalFiveController(IAnimalFiveManager animalFiveManager)
+    public AnimalFiveController(IAnimalFiveHeadService animalFiveManager)
     {
-      _animalFiveManager = animalFiveManager;
+      _animalFiveService = animalFiveManager;
     }
 
     [HttpPost("play")]
     [Consumes("application/json")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> Play([FromBody] AnimalFivePlayRequest request, CancellationToken token)
+    public async Task<IActionResult> Play([FromBody] AnimalFiveHeadPlayRequest request, CancellationToken token)
     {
       if (request.NumberOfPlayers <= 0)
       {
         return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Negative Number of Players"));
       }
 
-      var playResponse = await _animalFiveManager.BeginPlayAsync(request, token);
+      var playResponse = await _animalFiveService.BeginPlayAsync(request, token);
 
       return Ok(playResponse);
     }
@@ -42,7 +42,7 @@ namespace NoName.FunApi.Controllers
     [Consumes("application/json")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> Chain([FromBody] AnimalFiveChainRequest request, CancellationToken token)
+    public async Task<IActionResult> Chain([FromBody] AnimalFiveHeadChainRequest request, CancellationToken token)
     {
       if (request.PlayerId < 0)
       {
@@ -54,13 +54,13 @@ namespace NoName.FunApi.Controllers
         return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid"));
       }
 
-      var sessionExistsAndActive = await _animalFiveManager.IsValidSessionGuid(sessionGuid, token);
+      var sessionExistsAndActive = await _animalFiveService.IsValidSessionGuid(sessionGuid, token);
       if (sessionExistsAndActive is false)
       {
         return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active"));
       }
 
-      var chainResponse = await _animalFiveManager.ChainAsync(request, token);
+      var chainResponse = await _animalFiveService.ChainAsync(request, token);
 
       return Ok(chainResponse);
     }
@@ -69,20 +69,20 @@ namespace NoName.FunApi.Controllers
     [Consumes("application/json")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> Complete([FromBody] AnimalFiveCompleteGameRequest request, CancellationToken token)
+    public async Task<IActionResult> Complete([FromBody] AnimalFiveHeadCompleteGameRequest request, CancellationToken token)
     {
       if (!Guid.TryParse(request.SessionId, out var sessionGuid))
       {
         return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid"));
       }
 
-      var sessionExistsAndActive = await _animalFiveManager.IsValidSessionGuid(sessionGuid, token);
+      var sessionExistsAndActive = await _animalFiveService.IsValidSessionGuid(sessionGuid, token);
       if (sessionExistsAndActive is false)
       {
         return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active"));
       }
 
-      var completeGameResponse = await _animalFiveManager.CompleteGameAsync(request, token);
+      var completeGameResponse = await _animalFiveService.CompleteGameAsync(request, token);
 
       return Ok(completeGameResponse);
     }
