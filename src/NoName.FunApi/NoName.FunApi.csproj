@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common.DatabaseAccess\Common.DatabaseAccess.csproj" />
+    <ProjectReference Include="..\Common.DatabaseAccess\Common.DatabaseDapperAccess.csproj" />
+    <ProjectReference Include="..\Common.DatabaseDapperAccess\Common.DatabaseDapperAccess.csproj" />
     <ProjectReference Include="..\Game.AnimalFiveHead\Game.AnimalFiveHead.csproj" />
   </ItemGroup>
 

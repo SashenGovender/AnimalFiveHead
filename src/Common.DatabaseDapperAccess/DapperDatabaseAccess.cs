@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Collections.Generic;
 using System.Threading;
-using Common.DatabaseAccess.ConnectionProviders;
+using Common.DatabaseDapperAccess.ConnectionProviders;
 
-namespace Common.DatabaseAccess
+namespace Common.DatabaseDapperAccess
 {
   //https://github.com/DapperLib/Dapper
-  public class DapperDatabaseAccess : IDatabaseAccess
+  public class DapperDatabaseAccess : IDatabaseDapperAccess
   {
     private readonly IDatabaseConnectionProvider _connectionProvider;
 

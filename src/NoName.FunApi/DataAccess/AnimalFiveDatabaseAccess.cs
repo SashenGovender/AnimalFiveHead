@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.DatabaseAccess;
-using Common.DatabaseAccess.Exceptions;
+using Common.DatabaseDapperAccess;
+using Common.DatabaseDapperAccess.Exceptions;
 using Dapper;
 using Microsoft.Extensions.Logging;
 using NoName.FunApi.Models.AnimalFive.Dto;
@@ -13,7 +13,7 @@ namespace NoName.FunApi.DataAccess
 {
   public class AnimalFiveDatabaseAccess : IAnimalFiveDatabaseAccess
   {
-    private readonly IDatabaseAccess _databaseAccess;
+    private readonly IDatabaseDapperAccess _databaseAccess;
     private readonly ILogger<AnimalFiveDatabaseAccess> _logger;
 
     private const string DatabaseName = "AnimalFiveHead";
@@ -22,7 +22,7 @@ namespace NoName.FunApi.DataAccess
     private const string CompleteGameSessionProc = "dbo.pr_CompleteGameSession";
     private const string GameSessionExistAndActiveProc = "dbo.pr_GameSessionExistAndActive";
 
-    public AnimalFiveDatabaseAccess(IDatabaseAccess dataAccess, ILogger<AnimalFiveDatabaseAccess> logger)
+    public AnimalFiveDatabaseAccess(IDatabaseDapperAccess dataAccess, ILogger<AnimalFiveDatabaseAccess> logger)
     {
       _databaseAccess = dataAccess;
       _logger = logger;

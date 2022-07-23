@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>Common.DatabaseAccess</AssemblyName>
-    <RootNamespace>Common.DatabaseAccess</RootNamespace>
+    <AssemblyName>Common.DatabaseDapperAccess</AssemblyName>
+    <RootNamespace>Common.DatabaseDapperAccess</RootNamespace>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>true</WarningsAsErrors>
     <LangVersion>10</LangVersion>
@@ -15,5 +15,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Database.Entity.AnimalFiveHead\Database.Entity.AnimalFiveHead.csproj" />
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace Common.DatabaseAccess.ConnectionProviders
+namespace Common.DatabaseDapperAccess.ConnectionProviders
 {
   public class SqlConnectionProvider : IDatabaseConnectionProvider
   {

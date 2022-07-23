@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Common.DatabaseAccess.Exceptions
+namespace Common.DatabaseDapperAccess.Exceptions
 {
   [Serializable]
   public class DatabaseException : Exception

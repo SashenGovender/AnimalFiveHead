@@ -2,7 +2,7 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Common.DatabaseAccess.ConnectionProviders
+namespace Common.DatabaseDapperAccess.ConnectionProviders
 {
   public interface IDatabaseConnectionProvider
   {

@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Common.DatabaseAccess.Extensions;
+using Common.DatabaseDapperAccess.Extensions;
 using Game.AnimalFiveHead.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
