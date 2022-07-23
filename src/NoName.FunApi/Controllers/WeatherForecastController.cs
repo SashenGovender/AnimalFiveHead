@@ -1,9 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using NoName.FunApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace NoName.FunApi.Controllers
 {

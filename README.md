@@ -5,7 +5,7 @@ This project serves as an introduction into the fullstack development world for 
 * Each card has a value attached to it and is added to create a total score
 * If the adjacent card is of a higher ranked card, the lower card value is remove from the total. i.e. Leave, Caterpillar. A Caterpillar eats leave, and the leave value must be subtracted from the total. 
 * The Keeper and Tourist (NPC) Player are a subset of the Player and follow the same summation logic. However they can protect certain card types from the negative summation
-* The NPC players can only chain upto a maximumof 4 cards 
+* The NPC players can only chain upto a maximum of 5 cards 
 
 ## Getting Started
 Simply pull the source code from git into Visual Studio to build and run
@@ -15,7 +15,8 @@ These instructions will get you a copy of the project up and running on your loc
 * Visual Studio 2022
 * .Net SDK 6+
 * Postman
-* Sql Server Management Studio (https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
+* [Sql Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
+* Docker and Docker Desktop
 
 
 ## Resources
@@ -23,7 +24,6 @@ All images (cards, game splashes) were sourced from different sites and do not o
 
 ## ToDO
 * WebClient UI
-* Database Backend
 * Refactoring
 
 ## Authors

@@ -2,10 +2,10 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Models.Contract;
 using Common.Models.Contract.AnimalFiveHead;
+using Common.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
-using NoName.FunApi.Enums;
-using NoName.FunApi.Models;
 using NoName.FunApi.Services;
 
 namespace NoName.FunApi.Controllers
@@ -30,7 +30,7 @@ namespace NoName.FunApi.Controllers
     {
       if (request.NumberOfPlayers <= 0)
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Negative Number of Players"));
+        return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Negative Number of Players", Constants.ApplicationName));
       }
 
       var playResponse = await _animalFiveService.BeginPlayAsync(request, token);
@@ -46,18 +46,18 @@ namespace NoName.FunApi.Controllers
     {
       if (request.PlayerId < 0)
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Cannot have Negative number of players"));
+        return BadRequest(new ErrorResponse(ErrorCodes.NegativeNumberOfPlayers, "Cannot have Negative number of players", Constants.ApplicationName));
       }
 
       if (!Guid.TryParse(request.SessionId, out var sessionGuid))
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid"));
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid", Constants.ApplicationName));
       }
 
       var sessionExistsAndActive = await _animalFiveService.IsValidSessionGuid(sessionGuid, token);
       if (sessionExistsAndActive is false)
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active"));
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active", Constants.ApplicationName));
       }
 
       var chainResponse = await _animalFiveService.ChainAsync(request, token);
@@ -73,13 +73,13 @@ namespace NoName.FunApi.Controllers
     {
       if (!Guid.TryParse(request.SessionId, out var sessionGuid))
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid"));
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdIsNotAGuid, "Invalid Game Session Guid", Constants.ApplicationName));
       }
 
       var sessionExistsAndActive = await _animalFiveService.IsValidSessionGuid(sessionGuid, token);
       if (sessionExistsAndActive is false)
       {
-        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active"));
+        return BadRequest(new ErrorResponse(ErrorCodes.SessionIdDoesNotExistOrIsNotActive, "SessionId does not exist or is not active", Constants.ApplicationName));
       }
 
       var completeGameResponse = await _animalFiveService.CompleteGameAsync(request, token);

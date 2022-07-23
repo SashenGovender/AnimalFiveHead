@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using Game.AnimalFiveHead.Player;
 
 namespace Common.Models.Contract.AnimalFiveHead
 {

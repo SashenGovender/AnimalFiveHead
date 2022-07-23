@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Common.DatabaseDapperAccess.Extensions;
 using Game.AnimalFiveHead.Extensions;
@@ -58,6 +59,8 @@ namespace NoName.FunApi
       services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveHeadDapperDatabaseAccess>();
       services.AddTransient<IAnimalFiveHeadService, AnimalFiveHeadService>();
       services.AddTransient<IAnimalFiveHeadSessionManager, AnimalFiveHeadDatabaseSessionManager>();
+
+      services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
       //services.Configure<DatabaseConnectionInformation>(Configuration.GetSection("AnimalFiveDatabaseConnectionInformation"))
     }

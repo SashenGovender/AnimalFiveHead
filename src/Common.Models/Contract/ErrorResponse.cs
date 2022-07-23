@@ -1,6 +1,6 @@
-using NoName.FunApi.Enums;
+using Common.Models.Enums;
 
-namespace NoName.FunApi.Models
+namespace Common.Models.Contract
 {
   public class ErrorResponse
   {
@@ -8,11 +8,11 @@ namespace NoName.FunApi.Models
     public string Message { get; init; }
     public string SourceApplication { get; init; }
 
-    public ErrorResponse(ErrorCodes errorCode, string message)
+    public ErrorResponse(ErrorCodes errorCode, string message, string sourceApplication)
     {
       ErrorCode = errorCode;
       Message = message;
-      SourceApplication = "NoName.FunApi";
+      SourceApplication = sourceApplication;
     }
   }
 }

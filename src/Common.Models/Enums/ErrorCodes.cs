@@ -1,4 +1,4 @@
-namespace NoName.FunApi.Enums
+namespace Common.Models.Enums
 {
   public enum ErrorCodes
   {
