@@ -3,7 +3,7 @@ using Game.AnimalFiveHead.Enums;
 
 namespace Common.Models.Domain.AnimalFiveHead
 {
-  public class AnimalFivePlayerSaveSessionData
+  public class AnimalFiveHeadPlayerSaveSessionData
   {
     public Guid? SessionId { get; init; }
     public int PlayerId { get; init; }

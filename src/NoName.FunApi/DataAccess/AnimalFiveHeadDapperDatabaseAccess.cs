@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace NoName.FunApi.DataAccess
 {
-  public class AnimalFiveHeadDapperDatabaseAccess : IAnimalFiveDatabaseAccess
+  public class AnimalFiveHeadDapperDatabaseAccess : IAnimalFiveHeadDatabaseAccess
   {
     private readonly IDatabaseDapperAccess _databaseAccess;
     private readonly ILogger<AnimalFiveHeadDapperDatabaseAccess> _logger;
@@ -28,7 +28,7 @@ namespace NoName.FunApi.DataAccess
       _logger = logger;
     }
 
-    public async Task UpsertPlayerSessionInformationAsync(AnimalFivePlayerSaveSessionData newPlayerData, CancellationToken token)
+    public async Task UpsertPlayerSessionInformationAsync(AnimalFiveHeadPlayerSaveSessionData newPlayerData, CancellationToken token)
     {
       var parameters = new DynamicParameters();
       parameters.Add("SessionId", newPlayerData.SessionId);
@@ -50,14 +50,14 @@ namespace NoName.FunApi.DataAccess
     }
 
 
-    public async Task<IEnumerable<AnimalFivePlayerGetSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token)
+    public async Task<IEnumerable<AnimalFiveHeadPlayerGetSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token)
     {
       var parameters = new DynamicParameters();
       parameters.Add("SessionId", sessionId.ToString());
 
       try
       {
-        var data = await _databaseAccess.QueryAsync<AnimalFivePlayerGetSessionData>(DatabaseName, GetGameSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
+        var data = await _databaseAccess.QueryAsync<AnimalFiveHeadPlayerGetSessionData>(DatabaseName, GetGameSessionProc, token, parameters, commandType: CommandType.StoredProcedure);
         return data;
       }
       catch (Exception ex)

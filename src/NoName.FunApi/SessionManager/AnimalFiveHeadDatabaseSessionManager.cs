@@ -13,14 +13,14 @@ namespace NoName.FunApi.SessionManager
 {
   public class AnimalFiveHeadDatabaseSessionManager : IAnimalFiveHeadSessionManager
   {
-    private readonly IAnimalFiveDatabaseAccess _animalDatabaseAccess;
+    private readonly IAnimalFiveHeadDatabaseAccess _animalDatabaseAccess;
     private readonly IPlayerFactory _playerFactory;
 
     private IAnimalFiveHeadGame? _animalFiveHeadGame;
 
     public Guid GameSessionId { get; private set; }
 
-    public AnimalFiveHeadDatabaseSessionManager(IAnimalFiveDatabaseAccess animalDatabaseAccess, IPlayerFactory playerFactory)
+    public AnimalFiveHeadDatabaseSessionManager(IAnimalFiveHeadDatabaseAccess animalDatabaseAccess, IPlayerFactory playerFactory)
     {
       _animalDatabaseAccess = animalDatabaseAccess;
       _playerFactory = playerFactory;
@@ -76,7 +76,7 @@ namespace NoName.FunApi.SessionManager
 
     public async Task<bool> CheckIfValidSessionId(Guid sessionId, CancellationToken token) => await _animalDatabaseAccess.GameSessionExistsAndActiveAsync(sessionId, token);
 
-    private void RestorePlayerCards(BasePlayer player, AnimalFivePlayerGetSessionData playerSessionData)
+    private void RestorePlayerCards(BasePlayer player, AnimalFiveHeadPlayerGetSessionData playerSessionData)
     {
       var cardIds = playerSessionData.CardIds!.Split(';');
       foreach (var cardId in cardIds)
@@ -98,9 +98,9 @@ namespace NoName.FunApi.SessionManager
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0022:Use expression body for methods")]
-    private AnimalFivePlayerSaveSessionData CreatePlayerSaveSession(BasePlayer player)
+    private AnimalFiveHeadPlayerSaveSessionData CreatePlayerSaveSession(BasePlayer player)
     {
-      return new AnimalFivePlayerSaveSessionData()
+      return new AnimalFiveHeadPlayerSaveSessionData()
       {
         Cards = string.Join(";", player.Cards),
         CardIds = string.Join(";", player.Cards.Select(card => card.CardId)),

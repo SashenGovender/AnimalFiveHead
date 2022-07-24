@@ -67,7 +67,7 @@ namespace NoName.FunApi
       services.AddDapperDatabaseAccess();
       services.AddAnimalFiveGame();
 
-      services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveHeadDapperDatabaseAccess>();
+      services.AddSingleton<IAnimalFiveHeadDatabaseAccess, AnimalFiveHeadDapperDatabaseAccess>();
       services.AddTransient<IAnimalFiveHeadService, AnimalFiveHeadService>();
       services.AddTransient<IAnimalFiveHeadSessionManager, AnimalFiveHeadDatabaseSessionManager>();
 

@@ -6,10 +6,10 @@ using Common.Models.Domain.AnimalFiveHead;
 
 namespace NoName.FunApi.DataAccess
 {
-  public interface IAnimalFiveDatabaseAccess
+  public interface IAnimalFiveHeadDatabaseAccess
   {
-    Task<IEnumerable<AnimalFivePlayerGetSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token);
-    Task UpsertPlayerSessionInformationAsync(AnimalFivePlayerSaveSessionData newPlayerData, CancellationToken token);
+    Task<IEnumerable<AnimalFiveHeadPlayerGetSessionData>> GetBySessionIdAsync(Guid sessionId, CancellationToken token);
+    Task UpsertPlayerSessionInformationAsync(AnimalFiveHeadPlayerSaveSessionData newPlayerData, CancellationToken token);
     Task CompleteGameSessionAsync(Guid gameSessionId, CancellationToken token);
     Task<bool> GameSessionExistsAndActiveAsync(Guid gameSessionId, CancellationToken token);
   }

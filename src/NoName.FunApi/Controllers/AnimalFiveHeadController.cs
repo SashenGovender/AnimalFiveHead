@@ -11,13 +11,13 @@ using NoName.FunApi.Services;
 namespace NoName.FunApi.Controllers
 {
 
-  [Route("api/animalfive")]
+  [Route("api/animalfivehead")]
   [ApiController]
-  public class AnimalFiveController : ControllerBase
+  public class AnimalFiveHeadController : ControllerBase
   {
     private readonly IAnimalFiveHeadService _animalFiveService;
 
-    public AnimalFiveController(IAnimalFiveHeadService animalFiveManager)
+    public AnimalFiveHeadController(IAnimalFiveHeadService animalFiveManager)
     {
       _animalFiveService = animalFiveManager;
     }
