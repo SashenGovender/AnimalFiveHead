@@ -5,6 +5,7 @@ namespace Common.Models.Enums
     NegativeNumberOfPlayers = 1,
     SessionIdIsNotAGuid = 2,
     SessionIdDoesNotExistOrIsNotActive = 3,
+    Unknown = 4000
   };
 }
 

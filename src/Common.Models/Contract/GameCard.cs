@@ -1,13 +1,17 @@
+using System.Text.Json.Serialization;
 using Common.PlayingCards.Enums;
 
 namespace Common.Models.Contract
 {
   public class GameCard
   {
+    [JsonPropertyName("playCardFace")]
     public PlayCardFace Face { get; init; }
+
+    [JsonPropertyName("playCardType")]
     public PlayCardType Type { get; init; }
-    public int Value { get; init; }
-    public int CardId { get; init; }
+
+    [JsonPropertyName("rank")]
     public int Rank { get; init; }
 
   }

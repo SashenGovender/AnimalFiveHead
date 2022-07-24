@@ -5,8 +5,12 @@ namespace Common.Models.Contract
   public class ErrorResponse
   {
     public ErrorCodes ErrorCode { get; init; }
-    public string Message { get; init; }
-    public string SourceApplication { get; init; }
+    public string? Message { get; init; }
+    public string? SourceApplication { get; init; }
+
+    public ErrorResponse()
+    {
+    }
 
     public ErrorResponse(ErrorCodes errorCode, string message, string sourceApplication)
     {

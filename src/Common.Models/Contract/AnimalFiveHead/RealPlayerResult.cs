@@ -13,7 +13,7 @@ namespace Common.Models.Contract.AnimalFiveHead
     public int Score { get; init; }
 
     [JsonPropertyName("playersCards")]
-    public List<GameCard>? PlayerCards { get; init; }
+    public List<GameCard>? Cards { get; init; }
 
     [JsonPropertyName("result")]
     public PlayerMatchResult Result { get; init; }

@@ -59,7 +59,6 @@ namespace Database.Entity.AnimalFiveHead.Mappings
 
 
       builder.Property(e => e.DateTimeUpdated)
-      .IsRequired()
       .HasColumnName("DateTimeUpdated")
       .HasColumnType("datetime2(7)")
       .HasMaxLength(10);
