@@ -9,8 +9,8 @@ namespace Game.AnimalFiveHead.Player
     {
       BasePlayer player = playerType switch
       {
-        NpcPlayerType.KeeperId => new NpcKeeperPlayer(),
-        NpcPlayerType.TouristId => new NpcTouristPlayer(),
+        NpcPlayerType.Keeper => new NpcKeeperPlayer(),
+        NpcPlayerType.Tourist => new NpcTouristPlayer(),
         NpcPlayerType.NpcPlayerStartRange => throw new InvalidPlayerTypeException(playerType),
         NpcPlayerType.NpcPlayerEndRange => throw new InvalidPlayerTypeException(playerType),
         _ => throw new InvalidPlayerTypeException(playerType)

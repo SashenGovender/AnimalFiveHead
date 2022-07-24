@@ -3,8 +3,8 @@ namespace Game.AnimalFiveHead.Enums
   public enum NpcPlayerType
   {
     NpcPlayerStartRange = 99,
-    TouristId = 100,
-    KeeperId = 101,
+    Tourist = 100,
+    Keeper = 101,
     NpcPlayerEndRange = 500
   }
 }

@@ -36,8 +36,8 @@ namespace Game.AnimalFiveHead
 
     public void AddNpcPlayers()
     {
-      NpcPlayers.Add(_playerFactory.GetNpcPlayer(NpcPlayerType.KeeperId));
-      NpcPlayers.Add(_playerFactory.GetNpcPlayer(NpcPlayerType.TouristId));
+      NpcPlayers.Add(_playerFactory.GetNpcPlayer(NpcPlayerType.Keeper));
+      NpcPlayers.Add(_playerFactory.GetNpcPlayer(NpcPlayerType.Tourist));
     }
 
     public void BeginGame()

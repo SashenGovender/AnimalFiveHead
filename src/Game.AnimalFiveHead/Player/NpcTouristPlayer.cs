@@ -7,7 +7,7 @@ namespace Game.AnimalFiveHead.Player
 {
   public class NpcTouristPlayer : BasePlayer
   {
-    public NpcTouristPlayer() : base((int)NpcPlayerType.TouristId, PlayCardFace.Rabbit)
+    public NpcTouristPlayer() : base((int)NpcPlayerType.Tourist, PlayCardFace.Rabbit)
     {
       GameStatus = PlayerMatchResult.NoResult;
     }

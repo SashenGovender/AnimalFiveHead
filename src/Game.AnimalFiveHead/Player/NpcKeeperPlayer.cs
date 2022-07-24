@@ -7,7 +7,7 @@ namespace Game.AnimalFiveHead.Player
 {
   public class NpcKeeperPlayer : BasePlayer
   {
-    public NpcKeeperPlayer() : base((int)NpcPlayerType.KeeperId, PlayCardFace.HoneyBee)
+    public NpcKeeperPlayer() : base((int)NpcPlayerType.Keeper, PlayCardFace.HoneyBee)
     {
       GameStatus = PlayerMatchResult.NoResult;
     }
