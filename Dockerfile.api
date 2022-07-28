@@ -1,46 +1,80 @@
 # https://docs.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows
 # https://docs.docker.com/develop/develop-images/multistage-build/
 # https://docs.docker.com/samples/dotnetcore/
+# https://dotnetplaybook.com/deploy-a-net-core-api-with-docker/
+# https://stackoverflow.com/questions/62080742/breakpoints-not-hit-when-using-docker-compose-for-asp-net-core-project
 
+# Get Base Image (Full .NET Core SDK)
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 # Set the container working directory
 WORKDIR /app
 
-# Copy everything
-COPY src/ ./
+ARG Mode=Debug
+RUN echo "$Mode"
+
+# Copy everything ( sourceLocationAtActualPC destinationOfWorkingContainer
+COPY ./ ./
 
 # Restore as distinct layers
 RUN dotnet restore ./NoName.FunApi/NoName.FunApi.csproj
 
-# Build and publish a release
-RUN dotnet publish ./NoName.FunApi/NoName.FunApi.csproj -c Release -o /app/publish
+# Build and publish a release to the specified folder
+RUN dotnet publish ./NoName.FunApi/NoName.FunApi.csproj -c $Mode -o /app/publish
 
-# Build runtime image
+# The Line7 sdk should only be used for builds. Now that the image is built, we dont need the layers of the sdk
+# Build the image using only the dotnet runtime and the output of the build step
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
+ENV ASPNETCORE_URLS=https://+:443;http://+:80
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_HTTPS_PORT=8081
+
+# internal container ports exposed
 EXPOSE 80
 EXPOSE 443
 
 WORKDIR /app
 
+# multi-part build. Take the ouput of the previous build step and put it into our working directory
 COPY --from=build /app/publish ./
 
+# Whem our container starts, it should do this which is use the dotnet command to run the dll
+# WHatever gets specified on the commandline gets appended to the entrypoint
+# CMD -> THe commline parameter passed will get replaced entirely
 ENTRYPOINT ["dotnet", "NoName.FunApi.dll"]
 
 # Commands
-# BUILD
+## BUILD
 # docker build -t nonameapiimg -f Dockerfile.api .   This builds the image
 # This creates and runs the container
 
-# RUN
+## RUN
 # Detached (-d) 	--> --detach or -d , means that a Docker container runs in the background of your terminal. It does not receive input or display output
 # interactive(-it) 	--> This means you can execute commands inside the container while it is still running
 # --name			-->	Assign a name to the container
 # -p 				--> Exposes the ports. Specifies the port inside and outside the container. -p hostPort:containerPort (80:8080 - This binds port 8080 of the container to TCP port 80 on the host machine.)
 # https://docs.docker.com/engine/reference/run/
 # https://docs.docker.com/engine/reference/commandline/run/
-# docker run -it -p 9000:80 --name nonameapicontainer nonameapiimg
+# docker run -it -p 9000:80 --name sampleapicontainer samplewebapiimg
 
-# STOP
+## STOP
 # docker rm <container_name>
+
+## Other Docker Commands
+# docker --version
+# docker images
+# docker container list --all --size
+# docker container stop sampleapicontainer
+# docker container start
+# docker container rm
+# docker inspect
+
+# Certificate Creation and Usage
+# https://www.youtube.com/watch?v=lcaDDxJv260&ab_channel=LesJackson
+# https://docs.microsoft.com/en-us/aspnet/core/security/docker-compose-https?view=aspnetcore-6.0
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/run-aspnetcore-https-development.md
+# Run in location of csproj file
+# dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\{AssemblyName}.pfx -p {password here}
+# dotnet user-secrets set "Kestrel:Certificates:Development:Password" "{password here}"
+
