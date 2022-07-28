@@ -1,0 +1,36 @@
+# https://www.youtube.com/watch?v=4V7CwC_4oss&t=26s&ab_channel=LesJackson
+version: '3'
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04
+    volumes:
+      - db-sqlvol:/var/opt/mssql 
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pa55w0rd2019"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+
+  sample-api:
+    build: 
+      context: .
+      dockerfile: "Dockerfile.api"
+      args:
+        - Mode=Debug
+    volumes:
+      - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets #password
+      - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/ #certs
+    environment:
+      ASPNETCORE_URLS: "https://+:443;http://+:80"
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_HTTPS_PORT: "8081"
+      DBServer: "ms-sql-server" # pass configuration to application, ICOnfiguration will pick this up
+    ports: 
+      - "8080:80"
+      - "8081:443"
+    depends_on: 
+      - ms-sql-server
+
+volumes:
+  db-sqlvol:   
