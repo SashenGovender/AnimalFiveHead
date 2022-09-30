@@ -64,7 +64,6 @@ namespace NoName.FunApi
           builder.WithOrigins("http://https://localhost:7001/html/welcome");
         }));
 
-      services.AddDapperDatabaseAccess();
       services.AddAnimalFiveGame();
 
       services.AddSingleton<IAnimalFiveHeadDatabaseAccess, AnimalFiveHeadDapperDatabaseAccess>();
@@ -73,6 +72,10 @@ namespace NoName.FunApi
 
       services.AddAutoMapper(Assembly.GetExecutingAssembly());
       services.AddAutoMapper(typeof(MappingProfile));
+
+      //TODO
+      services.AddDapperDatabaseAccess();
+
 
       //services.Configure<DatabaseConnectionInformation>(Configuration.GetSection("AnimalFiveDatabaseConnectionInformation"))
     }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common.DatabaseDapperAccess\Common.DatabaseDapperAccess.csproj" />
     <ProjectReference Include="..\Common.Models\Common.Models.csproj" />
+    <ProjectReference Include="..\Database.Entity.AnimalFiveHead\Database.Entity.AnimalFiveHead.csproj" />
     <ProjectReference Include="..\Game.AnimalFiveHead\Game.AnimalFiveHead.csproj" />
   </ItemGroup>
 
