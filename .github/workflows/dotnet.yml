@@ -14,7 +14,7 @@ on:
 env:
   PROJECT_PATH: ./src/NoName.FunApi/NoName.FunApi.csproj
   PROJECT_CONFIGURATION: Release
-  API_VERSION: 1.2.3
+  API_VERSION: 1.2.3.${{GITHUB_RUN_NUMBER}}
 
 jobs:
   build:
@@ -30,16 +30,16 @@ jobs:
         dotnet-version: 6.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ${{PROJECT_PATH}}
+      run: dotnet restore ${{env.PROJECT_PATH}}
       
     - name: Build
-      run: dotnet build ${{PROJECT_PATH}} --configuration ${{PROJECT_CONFIGURATION}} --no-restore -p:Version=${{API_VERSION}}
+      run: dotnet build ${{env.PROJECT_PATH}} --configuration ${{env.PROJECT_CONFIGURATION}} --no-restore -p:Version=${{env.API_VERSION}}
       
     - name: Test
-      run: dotnet test ./src/NoName.FunApi.Tests --configuration ${{PROJECT_CONFIGURATION}} --verbosity normal --no-build
+      run: dotnet test ./src/NoName.FunApi.Tests --configuration ${{env.PROJECT_CONFIGURATION}} --verbosity normal --no-build
       
     - name: Publish
-      run: dotnet publish ${{PROJECT_PATH}} -configuration ${{PROJECT_CONFIGURATION}} --output artifacts/api  --no-build    
+      run: dotnet publish ${{env.PROJECT_PATH}} -configuration ${{env.PROJECT_CONFIGURATION}} --output artifacts/api  --no-build    
       
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3
