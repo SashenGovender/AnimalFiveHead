@@ -14,7 +14,7 @@ on:
 env:
   PROJECT_PATH: ./src/NoName.FunApi/NoName.FunApi.csproj
   PROJECT_CONFIGURATION: Release
-  API_VERSION: 1.2.3.${{env.GITHUB_RUN_NUMBER}}
+  API_VERSION: 1.2.3.${GITHUB_RUN_NUMBER}
 
 jobs:
   build:
