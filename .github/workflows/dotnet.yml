@@ -1,6 +1,9 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 # https://learn.microsoft.com/en-us/dotnet/architecture/devops-for-aspnet-developers/actions-build
+# https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-publish
+# https://stackoverflow.com/questions/70929921/github-action-docker-image-of-asp-net-core-application
+# https://github.com/marketplace/actions/build-and-push-docker-images
 
 name: Build NoName API
 
@@ -14,7 +17,10 @@ on:
 env:
   PROJECT_PATH: ./src/NoName.FunApi/NoName.FunApi.csproj
   PROJECT_CONFIGURATION: Release
-  API_VERSION: 1.2.3.${{github.run_number}}
+  MAJOR_VERSION: 1
+  MINOR_VERSION: 2
+  PATCH_VERSION: 3
+  API_VERSION: ${{env.MAJOR_VERSION}}.${{env.MINOR_VERSION}}.${{env.PATCH_VERSION}}.${{github.run_number}}
 
 jobs:
   build:
@@ -40,13 +46,21 @@ jobs:
       
     - name: Publish
       run: dotnet publish ${{env.PROJECT_PATH}} --configuration ${{env.PROJECT_CONFIGURATION}} --output artifacts/api  --no-build    
+
+#    - name: Build the Docker image
+#      run: docker build --tag nonameapi_img:$(date +%s) --file Dockerfile.api . 
       
-    - name: Upload a Build Artifact
+    - name: Upload NoName.FunApi Build Artifact
       uses: actions/upload-artifact@v3
       with:
         name: NoName.FunApi
         path:  ./artifacts/api/**
         if-no-files-found: error  
       
-      
+#    - name: Upload NoName.FunApi Docker Image Artifact
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: NoName.FunApi
+#        path:  ./artifacts/api/**
+#        if-no-files-found: error  
       
