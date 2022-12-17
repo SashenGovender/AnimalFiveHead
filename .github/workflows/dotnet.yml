@@ -1,7 +1,8 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+# https://learn.microsoft.com/en-us/dotnet/architecture/devops-for-aspnet-developers/actions-build
 
-name: Build API
+name: Build NoName API
 
 on:
   push:
@@ -9,6 +10,11 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:  
+  
+env:
+  PROJECT_PATH: ./src/NoName.FunApi/NoName.FunApi.csproj
+  PROJECT_CONFIGURATION: Release
+  API_VERSION: 1.2.3
 
 jobs:
   build:
@@ -24,22 +30,22 @@ jobs:
         dotnet-version: 6.0.x
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ${{PROJECT_PATH}}
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ${{PROJECT_PATH}} --configuration ${{PROJECT_CONFIGURATION}} --no-restore -p:Version=${{API_VERSION}}
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./src/NoName.FunApi.Tests --configuration ${{PROJECT_CONFIGURATION}} --verbosity normal --no-build
       
     - name: Publish
-      run: dotnet publish src/NoName.FunApi/NoName.FunApi.csproj -c Release -o artifacts/api     
+      run: dotnet publish ${{PROJECT_PATH}} -configuration ${{PROJECT_CONFIGURATION}} --output artifacts/api  --no-build    
       
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3
       with:
         name: NoName.FunApi
-        path:  src/NoName.FunApi/artifacts/api/**
+        path:  ./src/NoName.FunApi/artifacts/api/**
         if-no-files-found: error  
       
       
