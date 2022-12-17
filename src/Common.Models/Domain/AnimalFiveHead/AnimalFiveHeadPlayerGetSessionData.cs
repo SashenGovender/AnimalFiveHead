@@ -2,7 +2,7 @@ using System;
 
 namespace Common.Models.Domain.AnimalFiveHead
 {
-  public class AnimalFivePlayerGetSessionData
+  public class AnimalFiveHeadPlayerGetSessionData
   {
     public Guid? SessionId { get; init; }
     public int PlayerId { get; init; }

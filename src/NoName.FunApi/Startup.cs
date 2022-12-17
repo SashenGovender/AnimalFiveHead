@@ -64,15 +64,18 @@ namespace NoName.FunApi
           builder.WithOrigins("http://https://localhost:7001/html/welcome");
         }));
 
-      services.AddDapperDatabaseAccess();
       services.AddAnimalFiveGame();
 
-      services.AddSingleton<IAnimalFiveDatabaseAccess, AnimalFiveHeadDapperDatabaseAccess>();
+      services.AddSingleton<IAnimalFiveHeadDatabaseAccess, AnimalFiveHeadDapperDatabaseAccess>();
       services.AddTransient<IAnimalFiveHeadService, AnimalFiveHeadService>();
       services.AddTransient<IAnimalFiveHeadSessionManager, AnimalFiveHeadDatabaseSessionManager>();
 
       services.AddAutoMapper(Assembly.GetExecutingAssembly());
       services.AddAutoMapper(typeof(MappingProfile));
+
+      //TODO
+      services.AddDapperDatabaseAccess();
+
 
       //services.Configure<DatabaseConnectionInformation>(Configuration.GetSection("AnimalFiveDatabaseConnectionInformation"))
     }
