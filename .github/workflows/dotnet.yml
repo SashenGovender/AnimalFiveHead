@@ -39,7 +39,7 @@ jobs:
       run: dotnet test ./src/NoName.FunApi.Tests --configuration ${{env.PROJECT_CONFIGURATION}} --verbosity normal --no-build
       
     - name: Publish
-      run: dotnet publish ${{env.PROJECT_PATH}} -configuration ${{env.PROJECT_CONFIGURATION}} --output artifacts/api  --no-build    
+      run: dotnet publish ${{env.PROJECT_PATH}} --configuration ${{env.PROJECT_CONFIGURATION}} --output artifacts/api  --no-build    
       
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3
