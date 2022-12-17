@@ -20,7 +20,7 @@ env:
   MAJOR_VERSION: 1
   MINOR_VERSION: 2
   PATCH_VERSION: 3
-  API_VERSION: $MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION.${{github.run_number}}
+  API_VERSION: ${{ format('{0}.{1}.{2}.{3}', secrets.MAJOR_VERSION, secrets.MINOR_VERSION, secrets.PATCH_VERSION, github.run_number) }}
   #API_VERSION: 1.2.3.${{github.run_number}}
 
 jobs:
